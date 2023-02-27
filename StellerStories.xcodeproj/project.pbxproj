@@ -1,0 +1,460 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F7176C3E29A0D9160059340E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C3D29A0D9160059340E /* User.swift */; };
+		F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4229A0DA8B0059340E /* UserPresenter.swift */; };
+		F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4529A0DA9C0059340E /* UserViewModel.swift */; };
+		F7176C4829A0DB830059340E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* UserView.swift */; };
+		F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4A29A0DDBA0059340E /* UserService.swift */; };
+		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
+		F7C8374E29A7AA4400E2A629 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoryView.swift */; };
+		F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */; };
+		F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99D299E75F4009C9E45 /* ContentView.swift */; };
+		F7DDE9A0299E75F6009C9E45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DDE99F299E75F6009C9E45 /* Assets.xcassets */; };
+		F7DDE9A3299E75F6009C9E45 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DDE9A2299E75F6009C9E45 /* Preview Assets.xcassets */; };
+		F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9AB299E765A009C9E45 /* NetworkService.swift */; };
+		F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9AF299E796C009C9E45 /* UserDTO.swift */; };
+		F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */; };
+		F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F7176C3D29A0D9160059340E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		F7176C4229A0DA8B0059340E /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
+		F7176C4529A0DA9C0059340E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		F7176C4729A0DB830059340E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		F7176C4A29A0DDBA0059340E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
+		F7C8374D29A7AA4400E2A629 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		F7DDE998299E75F4009C9E45 /* StellerStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StellerStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellerStoriesApp.swift; sourceTree = "<group>"; };
+		F7DDE99D299E75F4009C9E45 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F7DDE99F299E75F6009C9E45 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F7DDE9A2299E75F6009C9E45 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F7DDE9AB299E765A009C9E45 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		F7DDE9AF299E796C009C9E45 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
+		F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoriesDTO.swift; sourceTree = "<group>"; };
+		F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDTO.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F7DDE995299E75F4009C9E45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F7176C3C29A0D8E20059340E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F7176C3D29A0D9160059340E /* User.swift */,
+				F7176C4C29A12D570059340E /* Story.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F7176C3F29A0DA680059340E /* UserView */ = {
+			isa = PBXGroup;
+			children = (
+				F7C8374C29A7AA2F00E2A629 /* Views */,
+				F7176C4729A0DB830059340E /* UserView.swift */,
+				F7176C4229A0DA8B0059340E /* UserPresenter.swift */,
+				F7176C4529A0DA9C0059340E /* UserViewModel.swift */,
+			);
+			path = UserView;
+			sourceTree = "<group>";
+		};
+		F7176C4929A0DDA70059340E /* UserService */ = {
+			isa = PBXGroup;
+			children = (
+				F7176C4A29A0DDBA0059340E /* UserService.swift */,
+			);
+			path = UserService;
+			sourceTree = "<group>";
+		};
+		F7C8374C29A7AA2F00E2A629 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7C8374D29A7AA4400E2A629 /* StoryView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F7DDE98F299E75F4009C9E45 = {
+			isa = PBXGroup;
+			children = (
+				F7DDE99A299E75F4009C9E45 /* StellerStories */,
+				F7DDE999299E75F4009C9E45 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F7DDE999299E75F4009C9E45 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE998299E75F4009C9E45 /* StellerStories.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F7DDE99A299E75F4009C9E45 /* StellerStories */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE9A9299E7628009C9E45 /* Main */,
+				F7DDE9AA299E7638009C9E45 /* Data */,
+				F7176C3C29A0D8E20059340E /* Models */,
+				F7DDE9B5299E81DB009C9E45 /* Views */,
+				F7DDE99F299E75F6009C9E45 /* Assets.xcassets */,
+				F7DDE9A1299E75F6009C9E45 /* Preview Content */,
+			);
+			path = StellerStories;
+			sourceTree = "<group>";
+		};
+		F7DDE9A1299E75F6009C9E45 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE9A2299E75F6009C9E45 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F7DDE9A9299E7628009C9E45 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */,
+				F7DDE99D299E75F4009C9E45 /* ContentView.swift */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		F7DDE9AA299E7638009C9E45 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE9AD299E7663009C9E45 /* NetworkService */,
+				F7176C4929A0DDA70059340E /* UserService */,
+				F7DDE9AE299E794C009C9E45 /* DTO */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		F7DDE9AD299E7663009C9E45 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE9AB299E765A009C9E45 /* NetworkService.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		F7DDE9AE299E794C009C9E45 /* DTO */ = {
+			isa = PBXGroup;
+			children = (
+				F7DDE9AF299E796C009C9E45 /* UserDTO.swift */,
+				F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */,
+				F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */,
+			);
+			path = DTO;
+			sourceTree = "<group>";
+		};
+		F7DDE9B5299E81DB009C9E45 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F7176C3F29A0DA680059340E /* UserView */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F7DDE997299E75F4009C9E45 /* StellerStories */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F7DDE9A6299E75F6009C9E45 /* Build configuration list for PBXNativeTarget "StellerStories" */;
+			buildPhases = (
+				F7DDE994299E75F4009C9E45 /* Sources */,
+				F7DDE995299E75F4009C9E45 /* Frameworks */,
+				F7DDE996299E75F4009C9E45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StellerStories;
+			productName = StellerStories;
+			productReference = F7DDE998299E75F4009C9E45 /* StellerStories.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F7DDE990299E75F4009C9E45 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					F7DDE997299E75F4009C9E45 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+				};
+			};
+			buildConfigurationList = F7DDE993299E75F4009C9E45 /* Build configuration list for PBXProject "StellerStories" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F7DDE98F299E75F4009C9E45;
+			productRefGroup = F7DDE999299E75F4009C9E45 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F7DDE997299E75F4009C9E45 /* StellerStories */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F7DDE996299E75F4009C9E45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7DDE9A3299E75F6009C9E45 /* Preview Assets.xcassets in Resources */,
+				F7DDE9A0299E75F6009C9E45 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F7DDE994299E75F4009C9E45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F7C8374E29A7AA4400E2A629 /* StoryView.swift in Sources */,
+				F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */,
+				F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */,
+				F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */,
+				F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */,
+				F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */,
+				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
+				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,
+				F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */,
+				F7176C4829A0DB830059340E /* UserView.swift in Sources */,
+				F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */,
+				F7176C3E29A0D9160059340E /* User.swift in Sources */,
+				F7176C4D29A12D570059340E /* Story.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F7DDE9A4299E75F6009C9E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F7DDE9A5299E75F6009C9E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F7DDE9A7299E75F6009C9E45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StellerStories/Preview Content\"";
+				DEVELOPMENT_TEAM = F8K3NNJ85M;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MiroslavBorek.StellerStories;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F7DDE9A8299E75F6009C9E45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"StellerStories/Preview Content\"";
+				DEVELOPMENT_TEAM = F8K3NNJ85M;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = MiroslavBorek.StellerStories;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F7DDE993299E75F4009C9E45 /* Build configuration list for PBXProject "StellerStories" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7DDE9A4299E75F6009C9E45 /* Debug */,
+				F7DDE9A5299E75F6009C9E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F7DDE9A6299E75F6009C9E45 /* Build configuration list for PBXNativeTarget "StellerStories" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F7DDE9A7299E75F6009C9E45 /* Debug */,
+				F7DDE9A8299E75F6009C9E45 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F7DDE990299E75F4009C9E45 /* Project object */;
+}

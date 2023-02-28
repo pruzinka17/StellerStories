@@ -77,6 +77,8 @@ extension UserPresenter {
                 self?.viewModel.state = .populated
             }
             
+            await fetchUserStories()
+            
         case let .failure(error):
             
             DispatchQueue.main.async { [weak self] in

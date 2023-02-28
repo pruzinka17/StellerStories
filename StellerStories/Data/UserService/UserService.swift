@@ -44,7 +44,7 @@ final class UserService {
     
     func fetchUserStories() async -> Result<[Story], Error> {
         
-        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "76794126980351029/stories")
+        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "76794126980351029/stories?limit=200")
         
         switch result {
             

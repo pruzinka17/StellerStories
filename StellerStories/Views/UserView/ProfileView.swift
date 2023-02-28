@@ -32,6 +32,7 @@ struct ProfileView: View {
                     
                     makeStoriesSelection(frame: frame)
                 }
+                .ignoresSafeArea()
             }
         }
         .fullScreenCover(isPresented: $presenter.isPresentingStories, content: {
@@ -41,7 +42,6 @@ struct ProfileView: View {
         .task {
             
             await self.presenter.fetch()
-            await self.presenter.fetchUserStories()
         }
     }
 }
@@ -54,33 +54,49 @@ private extension ProfileView {
         
         ZStack {
             
-            ZStack {
+            switch presenter.viewModel.state {
+            case .loading:
+                ProgressView()
+                    .padding(.top, proxy.safeAreaInsets.top)
                 
-                // background image
+            case .populated:
                 
-                AsyncImage(url: URL(string: presenter.viewModel.user.headerImageUrl)) { image in
+                ZStack {
                     
-                    image.resizable()
-                } placeholder: {
+                    AsyncImage(url: URL(string: presenter.viewModel.user.headerImageUrl)) { image in
+                        
+                        image.resizable()
+                    } placeholder: {
+                        
+                        Color(hex: presenter.viewModel.user.headerImageBackground)
+                    }
+                    .ignoresSafeArea()
                     
-                    Color(hex: presenter.viewModel.user.headerImageBackground)
+                    HStack {
+                        
+                        makeUserInfo()
+                        
+                        Spacer()
+                        
+                        makeUserActions()
+                    }
+                    .padding()
                 }
-                .ignoresSafeArea()
+                .padding(.top, proxy.safeAreaInsets.top)
                 
-                HStack {
+            case .failure:
+                ZStack {
                     
-                    makeUserInfo()
+                    Color.red
                     
-                    Spacer()
-                    
-                    makeUserActions()
+                    Text("connection error")
+                        .padding(.top, proxy.safeAreaInsets.top)
                 }
-                .padding()
+                
             }
-            .padding(.top, proxy.safeAreaInsets.top)
         }
         .shadow(radius: 5)
-        .frame(height: proxy.safeAreaInsets.top + 75)
+        .frame(width: proxy.frame(in: .local).width, height: proxy.safeAreaInsets.top + 75)
         .ignoresSafeArea()
     }
     
@@ -161,26 +177,34 @@ private extension ProfileView {
         VStack {
             
             HStack {
-                
+
                 Text("Stories")
                     .font(.system(size: 28, weight: .black, design: .default))
-                
+
                 Spacer()
             }
-            .padding()
             
             ScrollView(.horizontal, showsIndicators: false) {
                 
                 HStack {
                     
-                    ForEach(presenter.viewModel.stories, id: \.coverSource) { story in
+                    switch presenter.viewModel.storiesState {
+                    case .loading:
+                        ProgressView()
                         
-                        makeStory(story: story, frame: frame)
+                    case .populated:
+                        ForEach(presenter.viewModel.stories, id: \.coverSource) { story in
+                            
+                            makeStory(story: story, frame: frame)
+                        }
+                        
+                    case .failure:
+                        Color.red
                     }
                 }
-                .padding()
             }
         }
+        .padding()
     }
     
     //MARK: - story
@@ -188,10 +212,17 @@ private extension ProfileView {
     @ViewBuilder func makeStory(story: Story, frame: CGRect) -> some View {
         
         ZStack(alignment: .bottomTrailing) {
-                        
+            
+            Color(hex: story.coverBackground)
+                
             AsyncImage(url: URL(string: story.coverSource)) { image in
                 
-                image.resizable()
+                VStack {
+                    
+                    image
+                        .resizable()
+                        .scaledToFit()
+                }
             } placeholder: {
                 
                 Color(hex: story.coverBackground)
@@ -208,8 +239,16 @@ private extension ProfileView {
             presenter.initialStoryId = story.id
             presenter.isPresentingStories = true
         }
-        .frame(width: frame.width / 2, height: frame.width / 2 * 16 / 9)
+        .frame(width: Constants.storyWidth, height: Constants.storyWidth * 16 / 9)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+    }
+}
+
+private extension ProfileView {
+
+    enum Constants {
+
+        static let storyWidth: CGFloat = 200
     }
 }
 

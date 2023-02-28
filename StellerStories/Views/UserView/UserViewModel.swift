@@ -9,13 +9,8 @@ import Foundation
 
 struct UserViewModel {
     
-    var userFetchFailed: Bool
-    var storiesFetchFailed: Bool
-    var error: Error?
-    
-    var isPresentingStories: Bool
-    
-    var presentedStoryId: String
+    var state: State
+    var storiesState: State
     
     var user: User
     
@@ -23,31 +18,22 @@ struct UserViewModel {
     
     struct User {
         
-        var displayName: String
-        var userName: String
+        let displayName: String
+        let userName: String
         
-        var headerImageUrl: String
-        var headerImageBackground: String
+        let headerImageUrl: String
+        let headerImageBackground: String
         
-        var avatarImageUrl: String
-        var avatarImageBackground: String
+        let avatarImageUrl: String
+        let avatarImageBackground: String
         
-        var bio: String?
+        let bio: String?
     }
     
-    struct Story {
+    enum State {
         
-        var id: String
-        
-        var coverSource: String
-        var coverBackground: String
-        
-        var title: String?
-        
-        var commentCount: Int
-        
-        var aspectRatio: String
-        
-        var likes: Int
+        case loading
+        case populated
+        case failure
     }
 }

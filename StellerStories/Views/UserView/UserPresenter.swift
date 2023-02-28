@@ -12,26 +12,41 @@ final class UserPresenter: ObservableObject {
     private let userService: UserService
     
     @Published var viewModel: UserViewModel
+    @Published var isPresentingStories: Bool
+    @Published var initialStoryId: String
     
     init(userService: UserService) {
         
         self.userService = userService
         
         self.viewModel = UserViewModel(
-            userFetchFailed: false,
-            storiesFetchFailed: false,
-            isPresentingStories: false,
-            presentedStoryId: "",
+            state: .loading,
+            storiesState: .loading,
             user: UserViewModel.User(
                 displayName: "",
                 userName: "",
                 headerImageUrl: "",
                 headerImageBackground: "",
                 avatarImageUrl: "",
-                avatarImageBackground: ""
+                avatarImageBackground: "",
+                bio: ""
             ),
             stories: []
         )
+        
+        self.isPresentingStories = false
+        self.initialStoryId = ""
+    }
+}
+
+//MARK: - methods
+
+extension UserPresenter {
+    
+    func generateStoriesContext() -> StoriesContext {
+        
+        let context: StoriesContext = StoriesContext(intialStoryId: initialStoryId, stories: viewModel.stories)
+        return context
     }
 }
 
@@ -39,7 +54,7 @@ final class UserPresenter: ObservableObject {
 
 extension UserPresenter {
     
-    func fetchUser() async {
+    func fetch() async {
         
         let result = await userService.fetchUser()
         
@@ -55,15 +70,18 @@ extension UserPresenter {
                     headerImageUrl: user.headerImageUrl,
                     headerImageBackground: user.headerImageBackground,
                     avatarImageUrl: user.avatarImageUrl,
-                    avatarImageBackground: user.avatarImageBackground)
+                    avatarImageBackground: user.avatarImageBackground,
+                    bio: user.bio
+                )
+                
+                self?.viewModel.state = .populated
             }
             
         case let .failure(error):
             
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.error = error
-                self?.viewModel.userFetchFailed = true
+                self?.viewModel.state = .failure
             }
         }
     }
@@ -73,32 +91,31 @@ extension UserPresenter {
         let result = await userService.fetchUserStories()
         
         switch result {
+        case let .success(models):
             
-        case let .success(values):
-            
-            let stories: [UserViewModel.Story] = values.map {
+            let stories: [Story] = models.map { model in
                 
-                UserViewModel.Story(
-                    id: $0.id,
-                    coverSource: $0.coverSource,
-                    coverBackground: $0.coverBackground,
-                    commentCount: $0.commentCount,
-                    aspectRatio: $0.aspectRatio,
-                    likes: $0.likes
+                Story(
+                    id: model.id,
+                    coverSource: model.coverSource,
+                    coverBackground: model.coverBackground,
+                    title: model.title,
+                    commentCount: model.commentCount,
+                    aspectRatio: model.aspectRatio,
+                    likes: model.likes
                 )
             }
             
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.stories = stories
+                self?.viewModel.storiesState = .populated
             }
-            
         case let.failure(error):
             
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.error = error
-                self?.viewModel.storiesFetchFailed = true
+                self?.viewModel.storiesState = .failure
             }
         }
     }

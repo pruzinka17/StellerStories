@@ -9,32 +9,49 @@ import SwiftUI
 
 struct StoriesView: View {
     
-    @Binding var viewModel: UserViewModel
+    @ObservedObject var presenter: StoriesPresenter
+    
+    @Environment(\.dismiss) var dismissCurrentView
+    
+    init(context: StoriesContext) {
+        
+        self.presenter = StoriesPresenter(context: context)
+    }
     
     var body: some View {
         
-        TabView(selection: $viewModel.presentedStoryId) {
+        ZStack {
             
-            ForEach(viewModel.stories, id: \.id) { story in
+            Color(hex: presenter.viewModel.stories.first(where: { $0.id == presenter.viewModel.presentedStoryId })?.coverBackground ?? "#ffffff")
+                .animation(.default, value: presenter.viewModel.presentedStoryId)
+                .ignoresSafeArea()
+            
+            TabView(selection: $presenter.viewModel.presentedStoryId) {
                 
-                makeStory(story: story)
+                ForEach(presenter.viewModel.stories, id: \.id) { story in
+                    
+                    makeStory(story: story)
+                }
             }
+            .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .tabViewStyle(.page(indexDisplayMode: .never))
     }
     
-    @ViewBuilder func makeStory(story: UserViewModel.Story) -> some View {
+    @ViewBuilder func makeStory(story: Story) -> some View {
         
         GeometryReader { proxy in
             
+            let frame = proxy.frame(in: .local)
+            
             ZStack(alignment: .bottomTrailing) {
                 
-                Color(hex: story.coverBackground)
-                    .ignoresSafeArea()
-                            
                 AsyncImage(url: URL(string: story.coverSource)) { image in
                     
-                    image.resizable()
+                    image
+                        .resizable()
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .frame(width: frame.width, height: frame.width * 16 / 9)
+                        
                 } placeholder: {
                     
                     Color(hex: story.coverBackground)
@@ -46,7 +63,7 @@ struct StoriesView: View {
                     
                     withAnimation {
                         
-                        viewModel.isPresentingStories = false
+                        dismissCurrentView()
                     }
                 } label: {
 

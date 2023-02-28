@@ -10,10 +10,14 @@
 		F7176C3E29A0D9160059340E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C3D29A0D9160059340E /* User.swift */; };
 		F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4229A0DA8B0059340E /* UserPresenter.swift */; };
 		F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4529A0DA9C0059340E /* UserViewModel.swift */; };
-		F7176C4829A0DB830059340E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* UserView.swift */; };
+		F7176C4829A0DB830059340E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* ProfileView.swift */; };
 		F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4A29A0DDBA0059340E /* UserService.swift */; };
 		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
 		F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoriesView.swift */; };
+		F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */; };
+		F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */; };
+		F7D9470429AE387A003B1EC4 /* StoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470329AE387A003B1EC4 /* StoriesViewModel.swift */; };
+		F7D9470629AE3CC1003B1EC4 /* StoriesContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470529AE3CC1003B1EC4 /* StoriesContext.swift */; };
 		F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */; };
 		F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99D299E75F4009C9E45 /* ContentView.swift */; };
 		F7DDE9A0299E75F6009C9E45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DDE99F299E75F6009C9E45 /* Assets.xcassets */; };
@@ -28,10 +32,14 @@
 		F7176C3D29A0D9160059340E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F7176C4229A0DA8B0059340E /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		F7176C4529A0DA9C0059340E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		F7176C4729A0DB830059340E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		F7176C4729A0DB830059340E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F7176C4A29A0DDBA0059340E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
-		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesView.swift; sourceTree = "<group>"; };
+		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoriesView.swift; path = ../UserView/Views/StoriesView.swift; sourceTree = "<group>"; };
+		F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesPresenter.swift; sourceTree = "<group>"; };
+		F7D9470329AE387A003B1EC4 /* StoriesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesViewModel.swift; sourceTree = "<group>"; };
+		F7D9470529AE3CC1003B1EC4 /* StoriesContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesContext.swift; sourceTree = "<group>"; };
 		F7DDE998299E75F4009C9E45 /* StellerStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StellerStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellerStoriesApp.swift; sourceTree = "<group>"; };
 		F7DDE99D299E75F4009C9E45 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -66,8 +74,7 @@
 		F7176C3F29A0DA680059340E /* UserView */ = {
 			isa = PBXGroup;
 			children = (
-				F7C8374C29A7AA2F00E2A629 /* Views */,
-				F7176C4729A0DB830059340E /* UserView.swift */,
+				F7176C4729A0DB830059340E /* ProfileView.swift */,
 				F7176C4229A0DA8B0059340E /* UserPresenter.swift */,
 				F7176C4529A0DA9C0059340E /* UserViewModel.swift */,
 			);
@@ -82,12 +89,31 @@
 			path = UserService;
 			sourceTree = "<group>";
 		};
-		F7C8374C29A7AA2F00E2A629 /* Views */ = {
+		F7D946FA29AE3704003B1EC4 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F7D946FB29AE370A003B1EC4 /* Extensions */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F7D946FB29AE370A003B1EC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F7D9470029AE3845003B1EC4 /* StoriesView */ = {
 			isa = PBXGroup;
 			children = (
 				F7C8374D29A7AA4400E2A629 /* StoriesView.swift */,
+				F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */,
+				F7D9470329AE387A003B1EC4 /* StoriesViewModel.swift */,
+				F7D9470529AE3CC1003B1EC4 /* StoriesContext.swift */,
 			);
-			path = Views;
+			path = StoriesView;
 			sourceTree = "<group>";
 		};
 		F7DDE98F299E75F4009C9E45 = {
@@ -112,6 +138,7 @@
 				F7DDE9A9299E7628009C9E45 /* Main */,
 				F7DDE9AA299E7638009C9E45 /* Data */,
 				F7176C3C29A0D8E20059340E /* Models */,
+				F7D946FA29AE3704003B1EC4 /* UI */,
 				F7DDE9B5299E81DB009C9E45 /* Views */,
 				F7DDE99F299E75F6009C9E45 /* Assets.xcassets */,
 				F7DDE9A1299E75F6009C9E45 /* Preview Content */,
@@ -168,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				F7176C3F29A0DA680059340E /* UserView */,
+				F7D9470029AE3845003B1EC4 /* StoriesView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,16 +270,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */,
 				F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */,
+				F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */,
 				F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */,
+				F7D9470629AE3CC1003B1EC4 /* StoriesContext.swift in Sources */,
 				F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */,
 				F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */,
+				F7D9470429AE387A003B1EC4 /* StoriesViewModel.swift in Sources */,
 				F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */,
 				F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
 				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,
 				F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */,
-				F7176C4829A0DB830059340E /* UserView.swift in Sources */,
+				F7176C4829A0DB830059340E /* ProfileView.swift in Sources */,
 				F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */,
 				F7176C3E29A0D9160059340E /* User.swift in Sources */,
 				F7176C4D29A12D570059340E /* Story.swift in Sources */,

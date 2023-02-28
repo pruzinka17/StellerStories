@@ -17,6 +17,6 @@ struct ContentView: View {
             networkService: networkService
         )
         
-        UserView(userService: userService)
+        ProfileView(userService: userService)
     }
 }

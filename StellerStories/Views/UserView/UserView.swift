@@ -18,10 +18,6 @@ struct UserView: View {
         )
     }
     
-    @State var isPresentingStories: Bool = false
-    
-    @State var path: NavigationPath = NavigationPath()
-    
     var body: some View {
         
         ZStack {
@@ -34,14 +30,16 @@ struct UserView: View {
                     
                     userBar(proxy: proxy)
                     
-                    makeStories(frame: frame)
+                    makeStoriesSelection(frame: frame)
                 }
             }
         }
-        .sheet(isPresented: $isPresentingStories, content: {
+        .fullScreenCover(isPresented: $presenter.viewModel.isPresentingStories, content: {
+
+            StoriesView(
                 
-            StoryView(story: presenter.viewModel.stories.first(where: { $0.id == presenter.viewModel.presentedStoryId } )!, onTap: {})
-                
+                viewModel: $presenter.viewModel
+            )
         })
         .task {
             
@@ -139,11 +137,11 @@ private extension UserView {
     }
 }
 
-//MARK: - Stories
+//MARK: - Stories Selection
 
 private extension UserView {
     
-    @ViewBuilder func makeStories(frame: CGRect) -> some View {
+    @ViewBuilder func makeStoriesSelection(frame: CGRect) -> some View {
         
         VStack {
             
@@ -155,24 +153,45 @@ private extension UserView {
                 Spacer()
             }
             
-            ScrollView(.horizontal) {
+            ScrollView(.horizontal, showsIndicators: false) {
                 
                 HStack {
                     
                     ForEach(presenter.viewModel.stories, id: \.coverSource) { story in
                         
-                        StoryView(story: story, onTap: {
-                            
-                            presenter.viewModel.presentedStoryId = story.id
-                            isPresentingStories = true
-                        })
-                        .frame(width: 200, height: 355.5)
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        makeStory(story: story)
                     }
                 }
             }
         }
         .padding()
+    }
+    
+    @ViewBuilder func makeStory(story: UserViewModel.Story) -> some View {
+        
+        ZStack(alignment: .bottomTrailing) {
+                        
+            AsyncImage(url: URL(string: story.coverSource)) { image in
+                
+                image.resizable()
+            } placeholder: {
+                
+                Color(hex: story.coverBackground)
+            }
+                
+            Label(String(story.likes), systemImage: "hands.clap.fill")
+                .foregroundColor(.white)
+                .font(.system(size: 14))
+                .padding([.trailing, .bottom], 10)
+            
+        }
+        .onTapGesture {
+            
+            presenter.viewModel.presentedStoryId = story.id
+            presenter.viewModel.isPresentingStories = true
+        }
+        .frame(width: 200, height: 355.5)
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 

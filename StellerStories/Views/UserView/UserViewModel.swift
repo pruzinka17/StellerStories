@@ -13,6 +13,8 @@ struct UserViewModel {
     var storiesFetchFailed: Bool
     var error: Error?
     
+    var isPresentingStories: Bool
+    
     var presentedStoryId: String
     
     var user: User

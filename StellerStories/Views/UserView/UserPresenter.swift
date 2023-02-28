@@ -20,6 +20,7 @@ final class UserPresenter: ObservableObject {
         self.viewModel = UserViewModel(
             userFetchFailed: false,
             storiesFetchFailed: false,
+            isPresentingStories: false,
             presentedStoryId: "",
             user: UserViewModel.User(
                 displayName: "",

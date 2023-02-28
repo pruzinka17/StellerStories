@@ -13,7 +13,7 @@
 		F7176C4829A0DB830059340E /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* UserView.swift */; };
 		F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4A29A0DDBA0059340E /* UserService.swift */; };
 		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
-		F7C8374E29A7AA4400E2A629 /* StoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoryView.swift */; };
+		F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoriesView.swift */; };
 		F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */; };
 		F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE99D299E75F4009C9E45 /* ContentView.swift */; };
 		F7DDE9A0299E75F6009C9E45 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7DDE99F299E75F6009C9E45 /* Assets.xcassets */; };
@@ -31,7 +31,7 @@
 		F7176C4729A0DB830059340E /* UserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
 		F7176C4A29A0DDBA0059340E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
-		F7C8374D29A7AA4400E2A629 /* StoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryView.swift; sourceTree = "<group>"; };
+		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesView.swift; sourceTree = "<group>"; };
 		F7DDE998299E75F4009C9E45 /* StellerStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StellerStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7DDE99B299E75F4009C9E45 /* StellerStoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellerStoriesApp.swift; sourceTree = "<group>"; };
 		F7DDE99D299E75F4009C9E45 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -85,7 +85,7 @@
 		F7C8374C29A7AA2F00E2A629 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F7C8374D29A7AA4400E2A629 /* StoryView.swift */,
+				F7C8374D29A7AA4400E2A629 /* StoriesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -242,7 +242,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F7C8374E29A7AA4400E2A629 /* StoryView.swift in Sources */,
+				F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */,
 				F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */,
 				F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */,
 				F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */,

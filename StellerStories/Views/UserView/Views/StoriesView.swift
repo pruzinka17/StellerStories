@@ -26,14 +26,17 @@ struct StoriesView: View {
                 .animation(.default, value: presenter.viewModel.presentedStoryId)
                 .ignoresSafeArea()
             
-            TabView(selection: $presenter.viewModel.presentedStoryId) {
+            VStack(alignment: .center) {
                 
-                ForEach(presenter.viewModel.stories, id: \.id) { story in
+                TabView(selection: $presenter.viewModel.presentedStoryId) {
                     
-                    makeStory(story: story)
+                    ForEach(presenter.viewModel.stories, id: \.id) { story in
+                        
+                        makeStory(story: story)
+                    }
                 }
+                .tabViewStyle(.page(indexDisplayMode: .never))
             }
-            .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
 }
@@ -46,17 +49,13 @@ private extension StoriesView {
         
         GeometryReader { proxy in
             
-            let frame = proxy.frame(in: .local)
-            
-            ZStack(alignment: .bottomTrailing) {
+            VStack {
                 
                 AsyncImage(url: URL(string: story.coverSource)) { image in
                     
                     image
                         .resizable()
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .frame(width: frame.width, height: frame.width * 16 / 9)
-                        
+                        .scaledToFit()
                 } placeholder: {
                     
                     Color(hex: story.coverBackground)
@@ -65,9 +64,9 @@ private extension StoriesView {
             .overlay(
 
                 Button {
-                    
+
                     withAnimation {
-                        
+
                         dismissCurrentView()
                     }
                 } label: {
@@ -86,7 +85,52 @@ private extension StoriesView {
                 anchor: proxy.frame(in: .global).minX > 0 ? .leading : .trailing,
                 perspective: 2.5
             )
+            .clipShape(RoundedRectangle(cornerRadius: 15))
         }
+        
+//        GeometryReader { proxy in
+//
+//            let frame = proxy.frame(in: .local)
+//
+//            ZStack(alignment: .bottomTrailing) {
+//
+//                AsyncImage(url: URL(string: story.coverSource)) { image in
+//
+//                    image
+//                        .resizable()
+//                        .clipShape(RoundedRectangle(cornerRadius: 15))
+//                        .frame(width: frame.width, height: frame.width * 16 / 9)
+//
+//                } placeholder: {
+//
+//                    Color(hex: story.coverBackground)
+//                }
+//            }
+//            .overlay(
+//
+//                Button {
+//
+//                    withAnimation {
+//
+//                        dismissCurrentView()
+//                    }
+//                } label: {
+//
+//                    Image(systemName: "xmark")
+//                        .font(.title2)
+//                        .foregroundColor(.white)
+//                }
+//                .padding()
+//
+//                , alignment: .topTrailing
+//            )
+//            .rotation3DEffect(
+//                getAngle(proxy: proxy),
+//                axis: (x: 0, y: 1, z: 0),
+//                anchor: proxy.frame(in: .global).minX > 0 ? .leading : .trailing,
+//                perspective: 2.5
+//            )
+//        }
     }
 }
 

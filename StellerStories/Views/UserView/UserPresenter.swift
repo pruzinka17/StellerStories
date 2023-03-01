@@ -88,6 +88,7 @@ extension UserPresenter {
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.state = .failure
+                self?.viewModel.storiesState = .failure
             }
         }
     }

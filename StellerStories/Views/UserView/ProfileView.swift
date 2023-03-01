@@ -183,64 +183,71 @@ private extension ProfileView {
 
                 Spacer()
             }
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                
-                HStack {
+            .padding([.leading, .top])
                     
-                    switch presenter.viewModel.storiesState {
-                    case .loading:
-                        ProgressView()
+            switch presenter.viewModel.storiesState {
+            case .loading:
+                HStack(alignment: .center) {
+                    
+                    ProgressView()
+                }
+                .frame(height: 350)
+                
+            case .populated:
+                ScrollView(.horizontal, showsIndicators: false) {
+                    
+                    HStack {
                         
-                    case .populated:
                         ForEach(presenter.viewModel.stories, id: \.coverSource) { story in
                             
                             makeStory(story: story, frame: frame)
                         }
-                        
-                    case .failure:
-                        Color.red
                     }
+                    .padding([.leading], 8)
                 }
+                
+            case .failure:
+                HStack {
+                    
+                    Text("loading failed")
+                }
+                .frame(height: 350)
             }
         }
-        .padding()
     }
     
     //MARK: - story
     
     @ViewBuilder func makeStory(story: Story, frame: CGRect) -> some View {
         
-        ZStack(alignment: .bottomTrailing) {
+        ZStack {
             
             Color(hex: story.coverBackground)
-                
+             
             AsyncImage(url: URL(string: story.coverSource)) { image in
-                
-                VStack {
                     
                     image
                         .resizable()
                         .scaledToFit()
-                }
             } placeholder: {
                 
                 Color(hex: story.coverBackground)
             }
-                
+        }
+        .overlay(alignment: .bottomTrailing, content: {
+            
             Label(String(story.likes), systemImage: "hands.clap.fill")
                 .foregroundColor(.white)
                 .font(.system(size: 14))
                 .padding([.trailing, .bottom], 10)
-            
-        }
+        })
         .onTapGesture {
             
             presenter.initialStoryId = story.id
             presenter.isPresentingStories = true
         }
-        .frame(width: Constants.storyWidth, height: Constants.storyWidth * 16 / 9)
         .clipShape(RoundedRectangle(cornerRadius: 15))
+        .frame(width: Constants.storyWidth, height: Constants.storyWidth * 16 / 9)
     }
 }
 

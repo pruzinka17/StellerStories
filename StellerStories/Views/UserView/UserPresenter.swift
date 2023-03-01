@@ -12,7 +12,9 @@ final class UserPresenter: ObservableObject {
     private let userService: UserService
     
     @Published var viewModel: UserViewModel
+    
     @Published var isPresentingStories: Bool
+    
     @Published var initialStoryId: String
     
     init(userService: UserService) {
@@ -39,7 +41,7 @@ final class UserPresenter: ObservableObject {
     }
 }
 
-//MARK: - methods
+//MARK: - public methods
 
 extension UserPresenter {
     
@@ -50,9 +52,11 @@ extension UserPresenter {
     }
 }
 
-//MARK: - fetching functions
+//MARK: - fetching methods
 
 extension UserPresenter {
+    
+    //MARK: - fetch profile data
     
     func fetch() async {
         
@@ -87,6 +91,8 @@ extension UserPresenter {
             }
         }
     }
+    
+    //MARK: - fetch profile stories
     
     func fetchUserStories() async {
         

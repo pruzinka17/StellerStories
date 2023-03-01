@@ -244,6 +244,8 @@ private extension ProfileView {
     }
 }
 
+//MARK: - Constants
+
 private extension ProfileView {
 
     enum Constants {

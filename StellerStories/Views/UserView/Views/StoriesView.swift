@@ -22,7 +22,7 @@ struct StoriesView: View {
         
         ZStack {
             
-            Color(hex: presenter.viewModel.stories.first(where: { $0.id == presenter.viewModel.presentedStoryId })?.coverBackground ?? "#ffffff")
+            Color(hex: presenter.viewModel.stories.first(where: { $0.id == presenter.viewModel.presentedStoryId })?.coverBackground ?? Constants.defaultBackgroundColor)
                 .animation(.default, value: presenter.viewModel.presentedStoryId)
                 .ignoresSafeArea()
             
@@ -36,6 +36,11 @@ struct StoriesView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
     }
+}
+
+//MARK: - make story
+
+private extension StoriesView {
     
     @ViewBuilder func makeStory(story: Story) -> some View {
         
@@ -83,6 +88,11 @@ struct StoriesView: View {
             )
         }
     }
+}
+
+//MARK: - helper methods
+
+private extension StoriesView {
     
     func getAngle(proxy: GeometryProxy) -> Angle {
         
@@ -92,5 +102,13 @@ struct StoriesView: View {
         let degrees = rotationAngle * progress
         
         return Angle(degrees: Double(degrees))
+    }
+}
+
+private extension StoriesView {
+    
+    enum Constants {
+        
+        static let defaultBackgroundColor: String = "#ffffff"
     }
 }

@@ -105,7 +105,7 @@ private extension ProfileView {
     @ViewBuilder func makeUserInfo() -> some View {
             
         Image(systemName: Constants.SymbolIds.returnArrowSymbol)
-            .font(.system(size: 26, weight: .light))
+            .font(.Shared.returnArrow)
             .foregroundColor(.white)
             .frame(width: 20, height: 30)
         
@@ -125,11 +125,11 @@ private extension ProfileView {
             
             Text(presenter.viewModel.user.userName)
                 .foregroundColor(.white)
-                .font(.system(size: 14, weight: .bold))
+                .font(.Shared.userName)
             
             Text(presenter.viewModel.user.displayName)
                 .foregroundColor(.white)
-                .font(.system(size: 14, weight: .light))
+                .font(.Shared.displayName)
         }
     }
     
@@ -147,7 +147,7 @@ private extension ProfileView {
                         .foregroundColor(Color.white)
                     
                     Text(Constants.Text.followActionButtonText)
-                        .font(.system(size: 13, weight: .semibold, design: .default))
+                        .font(.Shared.followButton)
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                 }
@@ -179,7 +179,7 @@ private extension ProfileView {
             HStack {
 
                 Text(Constants.Text.storiesSectionHeader)
-                    .font(.system(size: 28, weight: .black, design: .default))
+                    .font(.Shared.sectionHeader)
 
                 Spacer()
             }
@@ -192,7 +192,7 @@ private extension ProfileView {
                     
                     ProgressView()
                 }
-                .frame(height: 350)
+                .frame(height: Constants.storyHeight)
                 
             case .populated:
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -212,7 +212,7 @@ private extension ProfileView {
                     
                     Text(Constants.Text.connectionErrorText)
                 }
-                .frame(height: 350)
+                .frame(height: Constants.storyHeight)
             }
         }
     }
@@ -240,7 +240,7 @@ private extension ProfileView {
             
             Label(String(story.likes), systemImage: Constants.SymbolIds.handClapSymbol)
                 .foregroundColor(.white)
-                .font(.system(size: 14))
+                .font(.Shared.claps)
                 .padding([.trailing, .bottom], 10)
         })
         .onTapGesture {
@@ -249,7 +249,7 @@ private extension ProfileView {
             presenter.isPresentingStories = true
         }
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .frame(width: Constants.storyWidth, height: Constants.storyWidth * 16 / 9)
+        .frame(width: Constants.storyHeight / 16 * 9, height: Constants.storyHeight)
     }
 }
 
@@ -259,13 +259,12 @@ private extension ProfileView {
 
     enum Constants {
 
-        static let storyWidth: CGFloat = 200
+        static let storyHeight: CGFloat = 355
         
         enum Text {
             
             static let connectionErrorText: String = "connection error"
             static let followActionButtonText: String = "Follow"
-            
             static let storiesSectionHeader: String = "Stories"
         }
         

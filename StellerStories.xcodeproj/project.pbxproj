@@ -26,6 +26,7 @@
 		F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9AF299E796C009C9E45 /* UserDTO.swift */; };
 		F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */; };
 		F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */; };
+		F7E796FF29B0DBB400250083 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E796FE29B0DBB400250083 /* Fonts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		F7DDE9AF299E796C009C9E45 /* UserDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDTO.swift; sourceTree = "<group>"; };
 		F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoriesDTO.swift; sourceTree = "<group>"; };
 		F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDTO.swift; sourceTree = "<group>"; };
+		F7E796FE29B0DBB400250083 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		F7D946FA29AE3704003B1EC4 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				F7E796FE29B0DBB400250083 /* Fonts.swift */,
 				F7D946FB29AE370A003B1EC4 /* Extensions */,
 			);
 			path = UI;
@@ -286,6 +289,7 @@
 				F7176C4829A0DB830059340E /* ProfileView.swift in Sources */,
 				F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */,
 				F7176C3E29A0D9160059340E /* User.swift in Sources */,
+				F7E796FF29B0DBB400250083 /* Fonts.swift in Sources */,
 				F7176C4D29A12D570059340E /* Story.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -24,7 +24,7 @@ struct StoriesView: View {
             
             ZStack {
                 
-                Color(hex: presenter.provideColor())
+                Color(hex: presenter.viewModel.viewBackgroundColor)
                     .animation(.default, value: presenter.viewModel.presentedStoryId)
                     .ignoresSafeArea()
                     
@@ -40,6 +40,9 @@ struct StoriesView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
+        }.onAppear {
+            
+            presenter.present()
         }
     }
 }
@@ -52,7 +55,7 @@ private extension StoriesView {
             
         GeometryReader { proxy in
                 
-            AsyncImage(url: URL(string: story.coverSource)) { image in
+            AsyncImage(url: story.coverSource) { image in
                 
                 image
                     .resizable()

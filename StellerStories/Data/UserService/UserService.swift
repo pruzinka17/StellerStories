@@ -15,22 +15,42 @@ final class UserService {
         
         self.networkService = networkService
     }
+}
+
+private extension UserService {
+    
+    enum ParsingErrors: Error {
+        
+        case urlParsingError
+    }
+}
+
+extension UserService {
     
     func fetchUser() async -> Result<User, Error> {
         
-        let result: Result<UserDTO, Error> = await networkService.fetch(path: "76794126980351029")
+        let result: Result<UserDTO, Error> = await networkService.fetch(path: "users/76794126980351029")
         
         switch result {
             
         case let .success(response):
             
+            guard let headerImageUrl = URL(string: response.headerImageUrl) else {
+                
+                return .failure(ParsingErrors.urlParsingError)
+            }
+            guard let avatarImageUrl = URL(string: response.avatarImageUrl) else {
+                
+                return .failure(ParsingErrors.urlParsingError)
+            }
+            
             let user: User = User(
                 id: response.id,
                 displayName: response.displayName,
                 userName: response.userName,
-                headerImageUrl: response.headerImageUrl,
+                headerImageUrl: headerImageUrl,
                 headerImageBackground: response.headerImageBackground,
-                avatarImageUrl: response.avatarImageUrl,
+                avatarImageUrl: avatarImageUrl,
                 avatarImageBackground: response.avatarImageBackground,
                 bio: response.bio)
             
@@ -44,7 +64,7 @@ final class UserService {
     
     func fetchUserStories() async -> Result<[Story], Error> {
         
-        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "76794126980351029/stories?limit=200")
+        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/76794126980351029/stories?limit=200")
         
         switch result {
             
@@ -54,20 +74,25 @@ final class UserService {
             
             for story in response.stories {
                 
+                guard let coverUrl = URL(string: story.coverSource) else {
+                    
+                    assertionFailure("Cannot map required properties")
+                    continue
+                }
+                
                 stories.append(
                     Story(
                         id: story.id,
-                        coverSource: story.coverSource,
-                        coverBackground: story.coverBackground,
                         title: story.title,
+                        coverSource: coverUrl,
+                        coverBackground: story.coverBackground,
                         commentCount: story.commentCount,
-                        aspectRatio: story.aspectRatio,
-                        likes: story.likes.count
+                        likes: story.likes.count,
+                        aspectRatio: AspectRatio(rawValue: story.aspectRatio) ?? .nineToSixteen
                     ))
             }
             
             return .success(stories)
-        
         case let .failure(error):
             
             return .failure(error)

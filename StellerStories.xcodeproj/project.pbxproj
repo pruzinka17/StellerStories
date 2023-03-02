@@ -27,6 +27,9 @@
 		F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */; };
 		F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */; };
 		F7E796FF29B0DBB400250083 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E796FE29B0DBB400250083 /* Fonts.swift */; };
+		F7E7970229B0DFCE00250083 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E7970129B0DFCE00250083 /* UserListView.swift */; };
+		F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E7970329B0DFD900250083 /* UserListViewModel.swift */; };
+		F7E7970629B0DFE500250083 /* UserListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E7970529B0DFE500250083 /* UserListPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +54,9 @@
 		F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoriesDTO.swift; sourceTree = "<group>"; };
 		F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDTO.swift; sourceTree = "<group>"; };
 		F7E796FE29B0DBB400250083 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		F7E7970129B0DFCE00250083 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
+		F7E7970329B0DFD900250083 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
+		F7E7970529B0DFE500250083 /* UserListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,10 +203,21 @@
 		F7DDE9B5299E81DB009C9E45 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F7E7970029B0DFC000250083 /* UserList */,
 				F7176C3F29A0DA680059340E /* UserView */,
 				F7D9470029AE3845003B1EC4 /* StoriesView */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F7E7970029B0DFC000250083 /* UserList */ = {
+			isa = PBXGroup;
+			children = (
+				F7E7970129B0DFCE00250083 /* UserListView.swift */,
+				F7E7970529B0DFE500250083 /* UserListPresenter.swift */,
+				F7E7970329B0DFD900250083 /* UserListViewModel.swift */,
+			);
+			path = UserList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +292,7 @@
 			files = (
 				F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */,
 				F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */,
+				F7E7970229B0DFCE00250083 /* UserListView.swift in Sources */,
 				F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */,
 				F7DDE99E299E75F4009C9E45 /* ContentView.swift in Sources */,
 				F7D9470629AE3CC1003B1EC4 /* StoriesContext.swift in Sources */,
@@ -282,11 +300,13 @@
 				F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */,
 				F7D9470429AE387A003B1EC4 /* StoriesViewModel.swift in Sources */,
 				F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */,
+				F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */,
 				F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
 				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,
 				F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */,
 				F7176C4829A0DB830059340E /* ProfileView.swift in Sources */,
+				F7E7970629B0DFE500250083 /* UserListPresenter.swift in Sources */,
 				F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */,
 				F7176C3E29A0D9160059340E /* User.swift in Sources */,
 				F7E796FF29B0DBB400250083 /* Fonts.swift in Sources */,

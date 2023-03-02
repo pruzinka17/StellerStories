@@ -1,5 +1,5 @@
 //
-//  UserView.swift
+//  ProfileView.swift
 //  StellerStories
 //
 //  Created by Miroslav Bořek on 18.02.2023.
@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ProfileView: View {
     
-    @ObservedObject var presenter: UserPresenter
+    @ObservedObject var presenter: ProfilePresenter
     
     init(userService: UserService) {
         
-        self.presenter = UserPresenter(
+        self.presenter = ProfilePresenter(
             userService: userService
         )
     }
@@ -28,53 +28,56 @@ struct ProfileView: View {
                 
                 VStack {
                     
-                    userBar(proxy: proxy)
-                    
-                    makeStoriesSelection(frame: frame)
+                    makeTopBar(proxy: proxy)
+                    makeStoriesStrip(frame: frame)
                 }
                 .ignoresSafeArea()
             }
         }
-        .fullScreenCover(isPresented: $presenter.isPresentingStories, content: {
+        .fullScreenCover(
+            isPresented: $presenter.isPresentingStories,
+            content: {
 
-            StoriesView(context: presenter.generateStoriesContext())
+            StoriesView(
+                context: presenter.makeStoriesContext()
+            )
         })
-        .task {
+        .onAppear {
             
-            await self.presenter.fetch()
+            presenter.present()
         }
     }
 }
 
-//MARK: - userBar
+// MARK: - TopBar
 
 private extension ProfileView {
     
-    @ViewBuilder func userBar(proxy: GeometryProxy) -> some View {
+    @ViewBuilder func makeTopBar(proxy: GeometryProxy) -> some View {
         
         ZStack {
             
             switch presenter.viewModel.state {
             case .loading:
+                
                 ProgressView()
                     .padding(.top, proxy.safeAreaInsets.top)
-                
-            case .populated:
+            case let .populated(user):
                 
                 ZStack {
                     
-                    AsyncImage(url: URL(string: presenter.viewModel.user.headerImageUrl)) { image in
+                    AsyncImage(url: user.headerImageUrl) { image in
                         
                         image.resizable()
                     } placeholder: {
                         
-                        Color(hex: presenter.viewModel.user.headerImageBackground)
+                        Color(hex: user.headerImageBackground)
                     }
                     .ignoresSafeArea()
                     
                     HStack {
                         
-                        makeUserInfo()
+                        makeUserInfo(user: user)
                         
                         Spacer()
                         
@@ -83,8 +86,8 @@ private extension ProfileView {
                     .padding()
                 }
                 .padding(.top, proxy.safeAreaInsets.top)
-                
             case .failure:
+                
                 ZStack {
                     
                     Color.red
@@ -100,9 +103,7 @@ private extension ProfileView {
         .ignoresSafeArea()
     }
     
-    //MARK: - userInfo
-    
-    @ViewBuilder func makeUserInfo() -> some View {
+    @ViewBuilder func makeUserInfo(user: ProfileViewModel.User) -> some View {
             
         Image(systemName: Constants.SymbolIds.returnArrowSymbol)
             .font(.Shared.returnArrow)
@@ -111,29 +112,27 @@ private extension ProfileView {
         
         VStack {
             
-            AsyncImage(url: URL(string: presenter.viewModel.user.avatarImageUrl)) { image in
+            AsyncImage(url: user.avatarImageUrl) { image in
                 
                 image.resizable().clipShape(Circle())
             } placeholder: {
                 
-                Color(hex: presenter.viewModel.user.avatarImageBackground).clipShape(Circle())
+                Color(hex: user.avatarImageBackground).clipShape(Circle())
             }
         }
         .frame(width: 55, height: 55)
         
         VStack(alignment: .leading) {
             
-            Text(presenter.viewModel.user.userName)
+            Text(user.userName)
                 .foregroundColor(.white)
                 .font(.Shared.userName)
             
-            Text(presenter.viewModel.user.displayName)
+            Text(user.displayName)
                 .foregroundColor(.white)
                 .font(.Shared.displayName)
         }
     }
-    
-    //MARK: - userActions
     
     @ViewBuilder func makeUserActions() -> some View {
         
@@ -166,13 +165,11 @@ private extension ProfileView {
     }
 }
 
-//MARK: - Stories Selection
+//MARK: - Stories strip
 
 private extension ProfileView {
     
-    //MARK: - selection
-    
-    @ViewBuilder func makeStoriesSelection(frame: CGRect) -> some View {
+    @ViewBuilder func makeStoriesStrip(frame: CGRect) -> some View {
         
         VStack {
             
@@ -186,22 +183,22 @@ private extension ProfileView {
             .padding([.leading, .top])
                     
             switch presenter.viewModel.storiesState {
-                
             case .loading:
+                
                 HStack(alignment: .center) {
                     
                     ProgressView()
                 }
                 .frame(height: Constants.storyHeight)
+            case let .populated(stories):
                 
-            case .populated:
                 ScrollView(.horizontal, showsIndicators: false) {
                     
                     HStack {
                         
-                        ForEach(presenter.viewModel.stories, id: \.coverSource) { story in
+                        ForEach(stories, id: \.id) { story in
                             
-                            makeStory(story: story, frame: frame)
+                            makeStoryItem(story: story, frame: frame)
                         }
                     }
                     .padding([.leading], 8)
@@ -217,15 +214,13 @@ private extension ProfileView {
         }
     }
     
-    //MARK: - story
-    
-    @ViewBuilder func makeStory(story: Story, frame: CGRect) -> some View {
+    @ViewBuilder func makeStoryItem(story: ProfileViewModel.Story, frame: CGRect) -> some View {
         
         ZStack {
             
             Color(hex: story.coverBackground)
              
-            AsyncImage(url: URL(string: story.coverSource)) { image in
+            AsyncImage(url: story.coverSource) { image in
                     
                     image
                         .resizable()
@@ -249,7 +244,10 @@ private extension ProfileView {
             presenter.isPresentingStories = true
         }
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .frame(width: Constants.storyHeight / 16 * 9, height: Constants.storyHeight)
+        .frame(
+            width: Constants.storyHeight / 16 * 9,
+            height: Constants.storyHeight
+        )
     }
 }
 

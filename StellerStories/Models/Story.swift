@@ -11,15 +11,19 @@ struct Story {
     
     let id: String
     
-    let coverSource: String
-    let coverBackground: String
-    
     let title: String?
     
+    let coverSource: URL
+    let coverBackground: String
+    
     let commentCount: Int
-    
-    let aspectRatio: String
-    
     let likes: Int
     
+    let aspectRatio: AspectRatio
+}
+
+enum AspectRatio: String {
+    
+    case nineToSixteen = "9:16"
+    case twoToThree = "2:3"
 }

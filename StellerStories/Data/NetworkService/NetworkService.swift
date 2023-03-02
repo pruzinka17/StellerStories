@@ -49,7 +49,7 @@ private extension NetworkService {
     
     enum Configuration {
         
-        static let domain: String = "https://api.steller.co/v1/users"
+        static let domain: String = "https://api.steller.co/v1"
     }
     
     enum Errors: Error {

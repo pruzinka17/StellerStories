@@ -1,5 +1,5 @@
 //
-//  UserViewModel.swift
+//  ProfileViewModel.swift
 //  StellerStories
 //
 //  Created by Miroslav Bořek on 18.02.2023.
@@ -7,33 +7,44 @@
 
 import Foundation
 
-struct UserViewModel {
+struct ProfileViewModel {
     
-    var state: State
-    var storiesState: State
+    var state: State<User>
+    var storiesState: State<[Story]>
     
-    var user: User
-    
-    var stories: [Story]
+    struct Story {
+        
+        let id: String
+        
+        let title: String?
+        
+        let coverSource: URL
+        let coverBackground: String
+        
+        let commentCount: Int
+        let likes: Int
+        
+        let aspectRatio: AspectRatio
+    }
     
     struct User {
         
         let displayName: String
         let userName: String
         
-        let headerImageUrl: String
+        let headerImageUrl: URL
         let headerImageBackground: String
         
-        let avatarImageUrl: String
+        let avatarImageUrl: URL
         let avatarImageBackground: String
         
         let bio: String?
     }
     
-    enum State {
+    enum State<T> {
         
         case loading
-        case populated
+        case populated(T)
         case failure
     }
 }

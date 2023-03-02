@@ -1,5 +1,5 @@
 //
-//  UserPresenter.swift
+//  ProfilePresenter.swift
 //  StellerStories
 //
 //  Created by Miroslav Bořek on 18.02.2023.
@@ -7,33 +7,25 @@
 
 import Foundation
 
-final class UserPresenter: ObservableObject {
+final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
     
-    @Published var viewModel: UserViewModel
+    private var stories: [Story]
     
+    @Published var viewModel: ProfileViewModel
     @Published var isPresentingStories: Bool
-    
     @Published var initialStoryId: String
     
     init(userService: UserService) {
         
         self.userService = userService
         
-        self.viewModel = UserViewModel(
+        self.stories = []
+        
+        self.viewModel = ProfileViewModel(
             state: .loading,
-            storiesState: .loading,
-            user: UserViewModel.User(
-                displayName: "",
-                userName: "",
-                headerImageUrl: "",
-                headerImageBackground: "",
-                avatarImageUrl: "",
-                avatarImageBackground: "",
-                bio: ""
-            ),
-            stories: []
+            storiesState: .loading
         )
         
         self.isPresentingStories = false
@@ -41,33 +33,47 @@ final class UserPresenter: ObservableObject {
     }
 }
 
-//MARK: - public methods
+// MARK: - Public methods
 
-extension UserPresenter {
+extension ProfilePresenter {
     
-    func generateStoriesContext() -> StoriesContext {
+    func present() {
         
-        let context: StoriesContext = StoriesContext(intialStoryId: initialStoryId, stories: viewModel.stories)
-        return context
+        Task {
+            
+            await fetch()
+        }
+    }
+    
+    func makeStoriesContext() -> StoriesContext {
+        
+        return StoriesContext(
+            intialStoryId: initialStoryId,
+            stories: stories
+        )
     }
 }
 
-//MARK: - fetching methods
+// MARK: - Fetching methods
 
-extension UserPresenter {
-    
-    //MARK: - fetch profile data
+private extension ProfilePresenter {
     
     func fetch() async {
         
+        DispatchQueue.main.async { [weak self] in
+            
+            self?.viewModel.state = .loading
+            
+        }
+
         let result = await userService.fetchUser()
         
         switch result {
-            
         case let .success(user):
+            
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.user = UserViewModel.User(
+                let user = ProfileViewModel.User(
                     displayName: user.displayName,
                     userName: user.userName,
                     headerImageUrl: user.headerImageUrl,
@@ -77,12 +83,12 @@ extension UserPresenter {
                     bio: user.bio
                 )
                 
-                self?.viewModel.state = .populated
+                self?.viewModel.state = .populated(user)
             }
             
             await fetchUserStories()
-            
         case let .failure(error):
+            
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.state = .failure
@@ -93,35 +99,38 @@ extension UserPresenter {
         }
     }
     
-    //MARK: - fetch profile stories
-    
     func fetchUserStories() async {
+        
+        DispatchQueue.main.async { [weak self] in
+            
+            self?.viewModel.storiesState = .loading
+        }
         
         let result = await userService.fetchUserStories()
         
         switch result {
+        case let .success(stories):
             
-        case let .success(models):
-            let stories: [Story] = models.map { model in
-                
-                Story(
-                    id: model.id,
-                    coverSource: model.coverSource,
-                    coverBackground: model.coverBackground,
-                    title: model.title,
-                    commentCount: model.commentCount,
-                    aspectRatio: model.aspectRatio,
-                    likes: model.likes
-                )
-            }
+            self.stories = stories
             
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.stories = stories
-                self?.viewModel.storiesState = .populated
+                self?.viewModel.storiesState = .populated(
+                    stories.map({ story in
+                        ProfileViewModel.Story(
+                            id: story.id,
+                            title: story.title,
+                            coverSource: story.coverSource,
+                            coverBackground: story.coverBackground,
+                            commentCount: story.commentCount,
+                            likes: story.likes,
+                            aspectRatio: story.aspectRatio
+                        )
+                    })
+                )
             }
-            
         case let.failure(error):
+            
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.storiesState = .failure

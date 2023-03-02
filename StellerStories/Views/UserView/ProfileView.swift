@@ -89,7 +89,7 @@ private extension ProfileView {
                     
                     Color.red
                     
-                    Text("connection error")
+                    Text(Constants.Text.connectionErrorText)
                         .padding(.top, proxy.safeAreaInsets.top)
                 }
                 
@@ -146,7 +146,7 @@ private extension ProfileView {
                     Image(systemName: "plus")
                         .foregroundColor(Color.white)
                     
-                    Text("Follow")
+                    Text(Constants.Text.followActionButtonText)
                         .font(.system(size: 13, weight: .semibold, design: .default))
                         .foregroundColor(.white)
                         .fontWeight(.bold)
@@ -178,7 +178,7 @@ private extension ProfileView {
             
             HStack {
 
-                Text("Stories")
+                Text(Constants.Text.storiesSectionHeader)
                     .font(.system(size: 28, weight: .black, design: .default))
 
                 Spacer()
@@ -209,7 +209,7 @@ private extension ProfileView {
             case .failure:
                 HStack {
                     
-                    Text("loading failed")
+                    Text(Constants.Text.connectionErrorText)
                 }
                 .frame(height: 350)
             }
@@ -258,6 +258,14 @@ private extension ProfileView {
     enum Constants {
 
         static let storyWidth: CGFloat = 200
+        
+        enum Text {
+            
+            static let connectionErrorText: String = "connection error"
+            static let followActionButtonText: String = "Follow"
+            
+            static let storiesSectionHeader: String = "Stories"
+        }
     }
 }
 

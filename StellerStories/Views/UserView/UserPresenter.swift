@@ -24,7 +24,8 @@ final class UserPresenter: ObservableObject {
         self.viewModel = UserViewModel(
             state: .loading,
             storiesState: .loading,
-            user: UserViewModel.User(
+            user: User(
+                id: "",
                 displayName: "",
                 userName: "",
                 headerImageUrl: "",
@@ -68,7 +69,8 @@ extension UserPresenter {
             
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.user = UserViewModel.User(
+                self?.viewModel.user = User(
+                    id: user.id,
                     displayName: user.displayName,
                     userName: user.userName,
                     headerImageUrl: user.headerImageUrl,

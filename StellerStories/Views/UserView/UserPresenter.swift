@@ -24,8 +24,7 @@ final class UserPresenter: ObservableObject {
         self.viewModel = UserViewModel(
             state: .loading,
             storiesState: .loading,
-            user: User(
-                id: "",
+            user: UserViewModel.User(
                 displayName: "",
                 userName: "",
                 headerImageUrl: "",
@@ -66,11 +65,9 @@ extension UserPresenter {
         switch result {
             
         case let .success(user):
-            
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.user = User(
-                    id: user.id,
+                self?.viewModel.user = UserViewModel.User(
                     displayName: user.displayName,
                     userName: user.userName,
                     headerImageUrl: user.headerImageUrl,
@@ -86,12 +83,13 @@ extension UserPresenter {
             await fetchUserStories()
             
         case let .failure(error):
-            
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.state = .failure
                 self?.viewModel.storiesState = .failure
             }
+            
+            print(error)
         }
     }
     
@@ -102,8 +100,8 @@ extension UserPresenter {
         let result = await userService.fetchUserStories()
         
         switch result {
-        case let .success(models):
             
+        case let .success(models):
             let stories: [Story] = models.map { model in
                 
                 Story(
@@ -122,12 +120,14 @@ extension UserPresenter {
                 self?.viewModel.stories = stories
                 self?.viewModel.storiesState = .populated
             }
-        case let.failure(error):
             
+        case let.failure(error):
             DispatchQueue.main.async { [weak self] in
                 
                 self?.viewModel.storiesState = .failure
             }
+            
+            print(error)
         }
     }
 }

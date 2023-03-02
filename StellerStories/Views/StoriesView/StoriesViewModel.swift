@@ -11,5 +11,7 @@ struct StoriesViewModel {
     
     var presentedStoryId: String
     
+    var viewBackgroundColor: String
+    
     var stories: [Story]
 }

@@ -104,7 +104,7 @@ private extension ProfileView {
     
     @ViewBuilder func makeUserInfo() -> some View {
             
-        Image(systemName: "chevron.backward")
+        Image(systemName: Constants.SymbolIds.returnArrowSymbol)
             .font(.system(size: 26, weight: .light))
             .foregroundColor(.white)
             .frame(width: 20, height: 30)
@@ -143,7 +143,7 @@ private extension ProfileView {
                 
                 HStack {
                     
-                    Image(systemName: "plus")
+                    Image(systemName: Constants.SymbolIds.plusSymbol)
                         .foregroundColor(Color.white)
                     
                     Text(Constants.Text.followActionButtonText)
@@ -158,7 +158,7 @@ private extension ProfileView {
             .foregroundColor(Color.secondary)
             .overlay {
                 
-                Image(systemName: "ellipsis")
+                Image(systemName: Constants.SymbolIds.moreInfoSymbol)
                     .foregroundColor(Color.white)
                     .rotationEffect(.degrees(-90))
             }
@@ -186,6 +186,7 @@ private extension ProfileView {
             .padding([.leading, .top])
                     
             switch presenter.viewModel.storiesState {
+                
             case .loading:
                 HStack(alignment: .center) {
                     
@@ -229,6 +230,7 @@ private extension ProfileView {
                     image
                         .resizable()
                         .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
                 
                 Color(hex: story.coverBackground)
@@ -236,7 +238,7 @@ private extension ProfileView {
         }
         .overlay(alignment: .bottomTrailing, content: {
             
-            Label(String(story.likes), systemImage: "hands.clap.fill")
+            Label(String(story.likes), systemImage: Constants.SymbolIds.handClapSymbol)
                 .foregroundColor(.white)
                 .font(.system(size: 14))
                 .padding([.trailing, .bottom], 10)
@@ -265,6 +267,14 @@ private extension ProfileView {
             static let followActionButtonText: String = "Follow"
             
             static let storiesSectionHeader: String = "Stories"
+        }
+        
+        enum SymbolIds {
+            
+            static let returnArrowSymbol: String = "chevron.backward"
+            static let plusSymbol: String = "plus"
+            static let moreInfoSymbol: String = "ellipsis"
+            static let handClapSymbol: String = "hands.clap.fill"
         }
     }
 }

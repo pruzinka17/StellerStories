@@ -13,6 +13,26 @@ final class StoriesPresenter: ObservableObject {
     
     init(context: StoriesContext) {
         
-        self.viewModel = StoriesViewModel(presentedStoryId: context.intialStoryId, stories: context.stories)
+        self.viewModel = StoriesViewModel(presentedStoryId: context.intialStoryId, viewBackgroundColor: "", stories: context.stories)
+    }
+}
+
+//MARK: - Helper methods
+
+extension StoriesPresenter {
+    
+    func provideColor() -> String {
+        
+        return viewModel.stories.first(where: { $0.id == viewModel.presentedStoryId } )?.coverBackground ?? Constants.defaultBackgroundColor
+    }
+}
+
+//MARK: - Constants
+
+private extension StoriesPresenter {
+    
+    enum Constants {
+        
+        static let defaultBackgroundColor: String = "#ffffff"
     }
 }

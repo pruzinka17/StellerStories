@@ -16,6 +16,20 @@ struct UserViewModel {
     
     var stories: [Story]
     
+    struct User {
+        
+        let displayName: String
+        let userName: String
+        
+        let headerImageUrl: String
+        let headerImageBackground: String
+        
+        let avatarImageUrl: String
+        let avatarImageBackground: String
+        
+        let bio: String?
+    }
+    
     enum State {
         
         case loading

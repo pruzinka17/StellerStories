@@ -90,12 +90,12 @@ private extension StoriesView {
                 anchor: proxy.frame(in: .global).minX > 0 ? .leading : .trailing,
                 perspective: 2.5
             )
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .clipShape(RoundedRectangle(cornerRadius: Constants.storyCornerRadius))
         }
     }
 }
 
-//MARK: - helper methods
+// MARK: - helper methods
 
 private extension StoriesView {
     
@@ -107,5 +107,15 @@ private extension StoriesView {
         let degrees = rotationAngle * progress
         
         return Angle(degrees: Double(degrees))
+    }
+}
+
+// MARK: - Constants
+
+private extension StoriesView {
+    
+    enum Constants {
+        
+        static let storyCornerRadius: CGFloat = 15
     }
 }

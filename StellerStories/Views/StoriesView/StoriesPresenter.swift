@@ -79,7 +79,7 @@ private extension StoriesPresenter {
     }
 }
 
-//MARK: - Constants
+// MARK: - Constants
 
 private extension StoriesPresenter {
     

@@ -28,7 +28,7 @@ struct ProfileView: View {
                 
                 VStack {
                     
-                    makeTopBar(proxy: proxy)
+                    makeTopBar(safeArea: proxy.safeAreaInsets)
                     makeStoriesStrip(frame: frame)
                 }
                 .ignoresSafeArea()
@@ -54,7 +54,7 @@ struct ProfileView: View {
 
 private extension ProfileView {
     
-    @ViewBuilder func makeTopBar(proxy: GeometryProxy) -> some View {
+    @ViewBuilder func makeTopBar(safeArea: EdgeInsets) -> some View {
         
         ZStack {
             
@@ -62,7 +62,7 @@ private extension ProfileView {
             case .loading:
                 
                 ProgressView()
-                    .padding(.top, proxy.safeAreaInsets.top)
+                    .padding(.top, safeArea.top)
             case let .populated(user):
                 
                 ZStack {
@@ -86,7 +86,7 @@ private extension ProfileView {
                     }
                     .padding()
                 }
-                .padding(.top, proxy.safeAreaInsets.top)
+                .padding(.top, safeArea.top)
             case .failure:
                 
                 ZStack {
@@ -94,13 +94,13 @@ private extension ProfileView {
                     Color.red
                     
                     Text(Constants.Text.connectionErrorText)
-                        .padding(.top, proxy.safeAreaInsets.top)
+                        .padding(.top, safeArea.top)
                 }
                 
             }
         }
         .shadow(radius: 5)
-        .frame(width: proxy.frame(in: .local).width, height: proxy.safeAreaInsets.top + 75)
+        .frame(height: safeArea.top + Constants.Padding.topBarTopPadding)
         .ignoresSafeArea()
     }
     
@@ -109,7 +109,7 @@ private extension ProfileView {
         Image(systemName: Constants.SymbolIds.returnArrowSymbol)
             .font(.Shared.returnArrow)
             .foregroundColor(.white)
-            .frame(width: 20, height: 30)
+            .frame(width: Constants.Sizes.returnArrowWidth, height: Constants.Sizes.returnArrowHeight)
         
         VStack {
             
@@ -121,7 +121,7 @@ private extension ProfileView {
                 Color(hex: user.avatarImageBackground).clipShape(Circle())
             }
         }
-        .frame(width: 55, height: 55)
+        .frame(width: Constants.Sizes.avatarSize, height: Constants.Sizes.avatarSize)
         
         VStack(alignment: .leading) {
             
@@ -137,7 +137,7 @@ private extension ProfileView {
     
     @ViewBuilder func makeUserActions() -> some View {
         
-        RoundedRectangle(cornerRadius: 20)
+        RoundedRectangle(cornerRadius: Constants.Radiuses.followButtonRadius)
             .foregroundColor(Color.secondary)
             .overlay {
                 
@@ -152,7 +152,7 @@ private extension ProfileView {
                         .fontWeight(.bold)
                 }
             }
-            .frame(width: 80, height: 32)
+            .frame(width: Constants.Sizes.followButttonWidth, height: Constants.Sizes.followButtonHeight)
         
         Circle()
             .foregroundColor(Color.secondary)
@@ -162,11 +162,11 @@ private extension ProfileView {
                     .foregroundColor(Color.white)
                     .rotationEffect(.degrees(-90))
             }
-            .frame(height: 33)
+            .frame(height: Constants.Sizes.moreActionsButtonSize)
     }
 }
 
-//MARK: - Stories strip
+// MARK: - Stories strip
 
 private extension ProfileView {
     
@@ -190,7 +190,7 @@ private extension ProfileView {
                     
                     ProgressView()
                 }
-                .frame(height: Constants.storyHeight)
+                .frame(height: Constants.Sizes.storyHeight)
             case let .populated(stories):
                 
                 ScrollViewReader { value in
@@ -204,7 +204,7 @@ private extension ProfileView {
                                 makeStoryItem(story: story, frame: frame)
                             }
                         }
-                        .padding([.leading], 8)
+                        .padding([.leading], Constants.Padding.storiesStackPadding)
                     }
                     .onReceive(presenter.$initialStoryId) { id in
                         
@@ -217,7 +217,7 @@ private extension ProfileView {
                     
                     Text(Constants.Text.connectionErrorText)
                 }
-                .frame(height: Constants.storyHeight)
+                .frame(height: Constants.Sizes.storyHeight)
             }
         }
     }
@@ -233,7 +233,7 @@ private extension ProfileView {
                     image
                         .resizable()
                         .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.Radiuses.storiesCornerRadius))
             } placeholder: {
                 
                 Color(hex: story.coverBackground)
@@ -260,34 +260,39 @@ private extension ProfileView {
                         .font(.Shared.claps)
                 }
             }
-            .padding([.trailing, .bottom], 10)
+            .padding([.trailing, .bottom], Constants.Padding.storiesStatsPadding)
         })
         .onTapGesture {
             
             presenter.initialStoryId = story.id
             presenter.isPresentingStories = true
         }
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: Constants.Radiuses.storiesCornerRadius))
         .frame(
-            width: Constants.storyHeight / 16 * 9,
-            height: Constants.storyHeight
+            width: Constants.Sizes.storyHeight / 16 * 9,
+            height: Constants.Sizes.storyHeight
         )
     }
 }
 
-//MARK: - Constants
+// MARK: - Constants
 
 private extension ProfileView {
 
     enum Constants {
-
-        static let storyHeight: CGFloat = 355
         
         enum Text {
             
             static let connectionErrorText: String = "connection error"
             static let followActionButtonText: String = "Follow"
             static let storiesSectionHeader: String = "Stories"
+        }
+        
+        enum Padding {
+            
+            static let topBarTopPadding: CGFloat = 75
+            static let storiesStackPadding: CGFloat = 6
+            static let storiesStatsPadding: CGFloat = 10
         }
         
         enum SymbolIds {
@@ -297,6 +302,23 @@ private extension ProfileView {
             static let moreInfoSymbol: String = "ellipsis"
             static let handClapSymbol: String = "hands.clap.fill"
             static let commentSymbol: String = "bubble.left.fill"
+        }
+        
+        enum Radiuses {
+            
+            static let storiesCornerRadius: CGFloat = 15
+            static let followButtonRadius: CGFloat = 20
+        }
+        
+        enum Sizes {
+            
+            static let storyHeight: CGFloat = 355
+            static let avatarSize: CGFloat = 55
+            static let returnArrowWidth: CGFloat = 20
+            static let returnArrowHeight: CGFloat = 30
+            static let followButttonWidth: CGFloat = 80
+            static let followButtonHeight: CGFloat = 32
+            static let moreActionsButtonSize: CGFloat = 33
         }
     }
 }

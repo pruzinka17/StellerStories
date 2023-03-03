@@ -52,6 +52,20 @@ extension ProfilePresenter {
             stories: stories
         )
     }
+    
+    func makeStoriesEventHandler() -> StoriesEventHandler {
+        
+        return StoriesEventHandler(
+            onStoryIdChange: { [weak self] id in
+                
+                guard self?.initialStoryId != id else {
+                    return
+                }
+                
+                self?.initialStoryId = id
+            }
+        )
+    }
 }
 
 // MARK: - Fetching methods

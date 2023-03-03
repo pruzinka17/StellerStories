@@ -37,11 +37,12 @@ struct ProfileView: View {
         .fullScreenCover(
             isPresented: $presenter.isPresentingStories,
             content: {
-
-            StoriesView(
-                context: presenter.makeStoriesContext()
-            )
-        })
+                
+                StoriesView(
+                    context: presenter.makeStoriesContext(),
+                    eventHadler: presenter.makeStoriesEventHandler()
+                )
+            })
         .onAppear {
             
             presenter.present()
@@ -192,19 +193,26 @@ private extension ProfileView {
                 .frame(height: Constants.storyHeight)
             case let .populated(stories):
                 
-                ScrollView(.horizontal, showsIndicators: false) {
+                ScrollViewReader { value in
                     
-                    HStack {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         
-                        ForEach(stories, id: \.id) { story in
+                        HStack {
                             
-                            makeStoryItem(story: story, frame: frame)
+                            ForEach(stories, id: \.id) { story in
+                                
+                                makeStoryItem(story: story, frame: frame)
+                            }
                         }
+                        .padding([.leading], 8)
                     }
-                    .padding([.leading], 8)
+                    .onReceive(presenter.$initialStoryId) { id in
+                        
+                        value.scrollTo(id)
+                    }
                 }
-                
             case .failure:
+                
                 HStack {
                     
                     Text(Constants.Text.connectionErrorText)
@@ -233,10 +241,26 @@ private extension ProfileView {
         }
         .overlay(alignment: .bottomTrailing, content: {
             
-            Label(String(story.likes), systemImage: Constants.SymbolIds.handClapSymbol)
-                .foregroundColor(.white)
-                .font(.Shared.claps)
-                .padding([.trailing, .bottom], 10)
+            let commentCount = story.commentCount
+            let likes = story.likes
+            
+            HStack {
+                
+                if commentCount > 0 {
+                    
+                    Label(String(commentCount), systemImage: Constants.SymbolIds.commentSymbol)
+                        .foregroundColor(.white)
+                        .font(.Shared.claps)
+                }
+                
+                if likes > 0 {
+                    
+                    Label(String(likes), systemImage: Constants.SymbolIds.handClapSymbol)
+                        .foregroundColor(.white)
+                        .font(.Shared.claps)
+                }
+            }
+            .padding([.trailing, .bottom], 10)
         })
         .onTapGesture {
             
@@ -272,6 +296,7 @@ private extension ProfileView {
             static let plusSymbol: String = "plus"
             static let moreInfoSymbol: String = "ellipsis"
             static let handClapSymbol: String = "hands.clap.fill"
+            static let commentSymbol: String = "bubble.left.fill"
         }
     }
 }

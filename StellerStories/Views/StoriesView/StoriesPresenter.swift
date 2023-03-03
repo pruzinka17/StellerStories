@@ -11,15 +11,20 @@ import Combine
 final class StoriesPresenter: ObservableObject {
     
     private let context: StoriesContext
+    private let eventHandler: StoriesEventHandler
     
     @Published var viewModel: StoriesViewModel
     
     private var isConfigured: Bool
-    private var cancellables: [AnyCancellable]
+    private var cancellables: Set<AnyCancellable>
     
-    init(context: StoriesContext) {
+    init(
+        context: StoriesContext,
+        eventHandler: StoriesEventHandler
+    ) {
         
         self.context = context
+        self.eventHandler = eventHandler
         self.viewModel = StoriesViewModel(
             presentedStoryId: context.intialStoryId,
             viewBackgroundColor: Constants.defaultBackgroundColor,
@@ -27,7 +32,7 @@ final class StoriesPresenter: ObservableObject {
         )
         
         self.isConfigured = false
-        self.cancellables = []
+        self.cancellables = Set<AnyCancellable>()
     }
 }
 
@@ -41,14 +46,25 @@ extension StoriesPresenter {
             return
         }
         
+        isConfigured = true
+        
         updateView()
         
-        $viewModel.map(\.presentedStoryId)
-            .removeDuplicates()
-            .sink { [weak self] newStoryId in
-                
-                self?.updateView()
-            }.store(in: &cancellables)
+        let publisher = $viewModel
+            .map(\.presentedStoryId)
+            .receive(on: DispatchQueue.main)
+            
+        
+        publisher.sink { [weak self] newStoryId in
+            
+            self?.updateView()
+        }.store(in: &cancellables)
+    }
+    
+    func handleClose() {
+        
+        let currentId = viewModel.presentedStoryId
+        eventHandler.onStoryIdChange(currentId)
     }
 }
 

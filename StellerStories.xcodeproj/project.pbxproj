@@ -13,6 +13,7 @@
 		F7176C4829A0DB830059340E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* ProfileView.swift */; };
 		F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4A29A0DDBA0059340E /* UserService.swift */; };
 		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
+		F719593329B22A090098610F /* StoriesEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719593229B22A090098610F /* StoriesEventHandler.swift */; };
 		F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoriesView.swift */; };
 		F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */; };
 		F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */; };
@@ -39,6 +40,7 @@
 		F7176C4729A0DB830059340E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F7176C4A29A0DDBA0059340E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
+		F719593229B22A090098610F /* StoriesEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesEventHandler.swift; sourceTree = "<group>"; };
 		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoriesView.swift; path = ../UserView/Views/StoriesView.swift; sourceTree = "<group>"; };
 		F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesPresenter.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 				F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */,
 				F7D9470329AE387A003B1EC4 /* StoriesViewModel.swift */,
 				F7D9470529AE3CC1003B1EC4 /* StoriesContext.swift */,
+				F719593229B22A090098610F /* StoriesEventHandler.swift */,
 			);
 			path = StoriesView;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */,
+				F719593329B22A090098610F /* StoriesEventHandler.swift in Sources */,
 				F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */,
 				F7E7970229B0DFCE00250083 /* UserListView.swift in Sources */,
 				F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */,

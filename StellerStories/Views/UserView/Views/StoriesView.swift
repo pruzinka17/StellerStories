@@ -13,9 +13,15 @@ struct StoriesView: View {
     
     @Environment(\.dismiss) var dismissCurrentView
     
-    init(context: StoriesContext) {
+    init(
+        context: StoriesContext,
+        eventHadler: StoriesEventHandler
+    ) {
         
-        self.presenter = StoriesPresenter(context: context)
+        self.presenter = StoriesPresenter(
+            context: context,
+            eventHandler: eventHadler
+        )
     }
     
     var body: some View {
@@ -32,10 +38,8 @@ struct StoriesView: View {
                         
                     ForEach(presenter.viewModel.stories, id: \.id) { story in
                         
-                        VStack {
-                            
-                            makeStory(story: story, proxy: proxy)
-                        }
+                        makeStory(story: story, proxy: proxy)
+                            .tag(story.id)
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
@@ -68,10 +72,8 @@ private extension StoriesView {
 
                 Button {
 
-                    withAnimation {
-
-                        dismissCurrentView()
-                    }
+                    dismissCurrentView()
+                    presenter.handleClose()
                 } label: {
 
                     Image(systemName: "xmark")

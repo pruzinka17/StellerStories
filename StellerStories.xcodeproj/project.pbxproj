@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		F7176C3E29A0D9160059340E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C3D29A0D9160059340E /* User.swift */; };
-		F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4229A0DA8B0059340E /* UserPresenter.swift */; };
-		F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4529A0DA9C0059340E /* UserViewModel.swift */; };
+		F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */; };
+		F7176C4629A0DA9C0059340E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */; };
 		F7176C4829A0DB830059340E /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4729A0DB830059340E /* ProfileView.swift */; };
 		F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4A29A0DDBA0059340E /* UserService.swift */; };
 		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
 		F719593329B22A090098610F /* StoriesEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719593229B22A090098610F /* StoriesEventHandler.swift */; };
+		F719593529B241980098610F /* ProfileViewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719593429B241980098610F /* ProfileViewContext.swift */; };
 		F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoriesView.swift */; };
 		F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */; };
 		F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */; };
@@ -35,12 +36,13 @@
 
 /* Begin PBXFileReference section */
 		F7176C3D29A0D9160059340E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		F7176C4229A0DA8B0059340E /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
-		F7176C4529A0DA9C0059340E /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
+		F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		F7176C4729A0DB830059340E /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		F7176C4A29A0DDBA0059340E /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		F719593229B22A090098610F /* StoriesEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesEventHandler.swift; sourceTree = "<group>"; };
+		F719593429B241980098610F /* ProfileViewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewContext.swift; sourceTree = "<group>"; };
 		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoriesView.swift; path = ../UserView/Views/StoriesView.swift; sourceTree = "<group>"; };
 		F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesPresenter.swift; sourceTree = "<group>"; };
@@ -85,8 +87,9 @@
 			isa = PBXGroup;
 			children = (
 				F7176C4729A0DB830059340E /* ProfileView.swift */,
-				F7176C4229A0DA8B0059340E /* UserPresenter.swift */,
-				F7176C4529A0DA9C0059340E /* UserViewModel.swift */,
+				F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */,
+				F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */,
+				F719593429B241980098610F /* ProfileViewContext.swift */,
 			);
 			path = UserView;
 			sourceTree = "<group>";
@@ -303,9 +306,10 @@
 				F7DDE99C299E75F4009C9E45 /* StellerStoriesApp.swift in Sources */,
 				F7DDE9B0299E796C009C9E45 /* UserDTO.swift in Sources */,
 				F7D9470429AE387A003B1EC4 /* StoriesViewModel.swift in Sources */,
-				F7176C4629A0DA9C0059340E /* UserViewModel.swift in Sources */,
+				F719593529B241980098610F /* ProfileViewContext.swift in Sources */,
+				F7176C4629A0DA9C0059340E /* ProfileViewModel.swift in Sources */,
 				F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */,
-				F7176C4329A0DA8B0059340E /* UserPresenter.swift in Sources */,
+				F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
 				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,
 				F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */,

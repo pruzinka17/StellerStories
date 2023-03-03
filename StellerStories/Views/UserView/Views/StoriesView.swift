@@ -85,6 +85,7 @@ private extension StoriesView {
                 , alignment: .topTrailing
             )
             .rotation3DEffect(
+                
                 provideAngle(proxy: proxy),
                 axis: (x: 0, y: 1, z: 0),
                 anchor: proxy.frame(in: .global).minX > 0 ? .leading : .trailing,

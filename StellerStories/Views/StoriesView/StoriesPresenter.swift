@@ -74,7 +74,10 @@ private extension StoriesPresenter {
     
     func updateView() {
         
-        let color = viewModel.stories.first(where: { $0.id == viewModel.presentedStoryId } )?.coverBackground ?? Constants.defaultBackgroundColor
+        let color = viewModel.stories.first(
+            where: { $0.id == viewModel.presentedStoryId }
+        )?.coverBackground ?? Constants.defaultBackgroundColor
+        
         viewModel.viewBackgroundColor = color
     }
 }

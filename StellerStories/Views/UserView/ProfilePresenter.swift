@@ -56,6 +56,7 @@ extension ProfilePresenter {
     func makeStoriesEventHandler() -> StoriesEventHandler {
         
         return StoriesEventHandler(
+            
             onStoryIdChange: { [weak self] id in
                 
                 guard self?.initialStoryId != id else {
@@ -80,7 +81,7 @@ private extension ProfilePresenter {
             
         }
 
-        let result = await userService.fetchUser()
+        let result = await userService.fetchUser(userId: "812249714027136186")
         
         switch result {
         case let .success(user):
@@ -120,7 +121,7 @@ private extension ProfilePresenter {
             self?.viewModel.storiesState = .loading
         }
         
-        let result = await userService.fetchUserStories()
+        let result = await userService.fetchUserStories(userId: "812249714027136186")
         
         switch result {
         case let .success(stories):

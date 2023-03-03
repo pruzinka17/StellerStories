@@ -27,9 +27,9 @@ private extension UserService {
 
 extension UserService {
     
-    func fetchUser() async -> Result<User, Error> {
+    func fetchUser(userId: String) async -> Result<User, Error> {
         
-        let result: Result<UserDTO, Error> = await networkService.fetch(path: "users/76794126980351029")
+        let result: Result<UserDTO, Error> = await networkService.fetch(path: "users/\(userId)")
         
         switch result {
             
@@ -62,9 +62,9 @@ extension UserService {
         }
     }
     
-    func fetchUserStories() async -> Result<[Story], Error> {
+    func fetchUserStories(userId: String) async -> Result<[Story], Error> {
         
-        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/76794126980351029/stories?limit=200")
+        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/\(userId)/stories?limit=200")
         
         switch result {
             

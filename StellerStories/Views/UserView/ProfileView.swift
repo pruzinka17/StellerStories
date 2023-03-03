@@ -35,6 +35,7 @@ struct ProfileView: View {
             }
         }
         .fullScreenCover(
+            
             isPresented: $presenter.isPresentingStories,
             content: {
                 
@@ -109,7 +110,10 @@ private extension ProfileView {
         Image(systemName: Constants.SymbolIds.returnArrowSymbol)
             .font(.Shared.returnArrow)
             .foregroundColor(.white)
-            .frame(width: Constants.Sizes.returnArrowWidth, height: Constants.Sizes.returnArrowHeight)
+            .frame(
+                width: Constants.Sizes.returnArrowWidth,
+                height: Constants.Sizes.returnArrowHeight
+            )
         
         VStack {
             
@@ -121,7 +125,10 @@ private extension ProfileView {
                 Color(hex: user.avatarImageBackground).clipShape(Circle())
             }
         }
-        .frame(width: Constants.Sizes.avatarSize, height: Constants.Sizes.avatarSize)
+        .frame(
+            width: Constants.Sizes.avatarSize,
+            height: Constants.Sizes.avatarSize
+        )
         
         VStack(alignment: .leading) {
             
@@ -152,7 +159,10 @@ private extension ProfileView {
                         .fontWeight(.bold)
                 }
             }
-            .frame(width: Constants.Sizes.followButttonWidth, height: Constants.Sizes.followButtonHeight)
+            .frame(
+                width: Constants.Sizes.followButttonWidth,
+                height: Constants.Sizes.followButtonHeight
+            )
         
         Circle()
             .foregroundColor(Color.secondary)
@@ -208,7 +218,7 @@ private extension ProfileView {
                     }
                     .onReceive(presenter.$initialStoryId) { id in
                         
-                        value.scrollTo(id)
+                        value.scrollTo(id, anchor: .center)
                     }
                 }
             case .failure:
@@ -233,7 +243,9 @@ private extension ProfileView {
                     image
                         .resizable()
                         .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: Constants.Radiuses.storiesCornerRadius))
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: Constants.Radiuses.storiesCornerRadius)
+                        )
             } placeholder: {
                 
                 Color(hex: story.coverBackground)
@@ -269,6 +281,7 @@ private extension ProfileView {
         }
         .clipShape(RoundedRectangle(cornerRadius: Constants.Radiuses.storiesCornerRadius))
         .frame(
+            
             width: Constants.Sizes.storyHeight / 16 * 9,
             height: Constants.Sizes.storyHeight
         )

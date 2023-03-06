@@ -29,6 +29,7 @@
 		F7DDE9B2299E7C50009C9E45 /* UserStoriesDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */; };
 		F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */; };
 		F7E2F74229B5D04B007D32DF /* UserListContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E2F74129B5D04B007D32DF /* UserListContext.swift */; };
+		F7E2F74429B61094007D32DF /* OffsetPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E2F74329B61094007D32DF /* OffsetPreferenceKey.swift */; };
 		F7E796FF29B0DBB400250083 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E796FE29B0DBB400250083 /* Fonts.swift */; };
 		F7E7970229B0DFCE00250083 /* UserListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E7970129B0DFCE00250083 /* UserListView.swift */; };
 		F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E7970329B0DFD900250083 /* UserListViewModel.swift */; };
@@ -59,6 +60,7 @@
 		F7DDE9B1299E7C50009C9E45 /* UserStoriesDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoriesDTO.swift; sourceTree = "<group>"; };
 		F7DDE9B3299E80B3009C9E45 /* StoryDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryDTO.swift; sourceTree = "<group>"; };
 		F7E2F74129B5D04B007D32DF /* UserListContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListContext.swift; sourceTree = "<group>"; };
+		F7E2F74329B61094007D32DF /* OffsetPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetPreferenceKey.swift; sourceTree = "<group>"; };
 		F7E796FE29B0DBB400250083 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		F7E7970129B0DFCE00250083 /* UserListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListView.swift; sourceTree = "<group>"; };
 		F7E7970329B0DFD900250083 /* UserListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListViewModel.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		F7DDE9AA299E7638009C9E45 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				F7E2F74329B61094007D32DF /* OffsetPreferenceKey.swift */,
 				F7DDE9AD299E7663009C9E45 /* NetworkService */,
 				F7176C4929A0DDA70059340E /* UserService */,
 				F7DDE9AE299E794C009C9E45 /* DTO */,
@@ -314,6 +317,7 @@
 				F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */,
 				F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
+				F7E2F74429B61094007D32DF /* OffsetPreferenceKey.swift in Sources */,
 				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,
 				F7E2F74229B5D04B007D32DF /* UserListContext.swift in Sources */,
 				F7DDE9AC299E765A009C9E45 /* NetworkService.swift in Sources */,

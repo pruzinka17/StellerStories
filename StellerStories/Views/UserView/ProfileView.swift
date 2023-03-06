@@ -214,18 +214,48 @@ private extension ProfileView {
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         
-                        HStack {
-                            
-                            ForEach(stories, id: \.id) { story in
+                        ZStack {
+                         
+                            HStack {
                                 
-                                makeStoryItem(story: story, frame: frame)
+                                ForEach(stories, id: \.id) { story in
+                                    
+                                    makeStoryItem(story: story, frame: frame)
+                                }
                             }
+                            .background(
+                                
+                                GeometryReader { proxy in
+                                    
+                                    Color.clear.onAppear {
+                                        
+                                        presenter.contentWidth = proxy.size.width
+                                        print("content width: \(proxy.size.width)")
+                                    }
+                                }
+                            )
+                            .padding([.leading], Constants.Padding.storiesStackPadding)
+                            
+                            GeometryReader { proxy in
+                                
+                                Color.clear
+                                    .preference(
+                                        key: OffsetPreferenceKey.self,
+                                        value: proxy.frame(in: .named("StoriesScroll")).minX
+                                    )
+                            }.frame(height: 0)
                         }
-                        .padding([.leading], Constants.Padding.storiesStackPadding)
                     }
+                    .coordinateSpace(name: "StoriesScroll")
+                    .onPreferenceChange(OffsetPreferenceKey.self, perform: { value in
+                        
+                        presenter.position = value * -1
+                        presenter.handleEvent(.didScrollStories)
+                        print(value * -1)
+                    })
                     .onReceive(presenter.$initialStoryId) { id in
                         
-                        value.scrollTo(id, anchor: .center)
+                        value.scrollTo(id, anchor: .trailing)
                     }
                 }
             case .failure:
@@ -267,14 +297,14 @@ private extension ProfileView {
                 
                 if commentCount > 0 {
                     
-                    Label(String(commentCount), systemImage: Constants.SymbolIds.commentSymbol)
+                    Label("\(commentCount)", systemImage: Constants.SymbolIds.commentSymbol)
                         .foregroundColor(.white)
                         .font(.Shared.claps)
                 }
                 
                 if likes > 0 {
                     
-                    Label(String(likes), systemImage: Constants.SymbolIds.handClapSymbol)
+                    Label("\(likes)", systemImage: Constants.SymbolIds.handClapSymbol)
                         .foregroundColor(.white)
                         .font(.Shared.claps)
                 }

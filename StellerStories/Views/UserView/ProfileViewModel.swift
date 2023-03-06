@@ -16,13 +16,11 @@ struct ProfileViewModel {
         
         let id: String
         
-        let title: String?
-        
         let coverSource: URL
         let coverBackground: String
         
         let commentCount: Int
-        let likes: Int
+        let likes: Int // TODO: Rename
         
         let aspectRatio: AspectRatio
     }

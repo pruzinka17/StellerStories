@@ -7,11 +7,18 @@
 
 import Foundation
 
+enum ProfileViewEvents {
+    
+    case didScrollStories
+}
+
 final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
     
     private var stories: [Story]
+    
+    private var cursor: String?
     
     private let userId: String
     
@@ -19,7 +26,13 @@ final class ProfilePresenter: ObservableObject {
     @Published var isPresentingStories: Bool
     @Published var initialStoryId: String
     
-    init(userService: UserService, context: ProfileContext) {
+    @Published var position: CGFloat
+    @Published var contentWidth: CGFloat
+    
+    init(
+        userService: UserService,
+        context: ProfileContext
+    ) {
         
         self.userService = userService
         
@@ -34,6 +47,9 @@ final class ProfilePresenter: ObservableObject {
         
         self.isPresentingStories = false
         self.initialStoryId = ""
+        
+        self.position = 0
+        self.contentWidth = 0
     }
 }
 
@@ -46,6 +62,21 @@ extension ProfilePresenter {
         Task {
             
             await fetch()
+        }
+    }
+    
+    func handleEvent(_ event: ProfileViewEvents) {
+        
+        switch event {
+        case .didScrollStories:
+            if position / contentWidth > 0.7 {
+                
+                Task {
+                    
+                    print("fetching more stories")
+                    await fetchUserStories()
+                }
+            }
         }
     }
     
@@ -125,12 +156,13 @@ private extension ProfilePresenter {
             self?.viewModel.storiesState = .loading
         }
         
-        let result = await userService.fetchUserStories(userId: userId)
+        let result = await userService.fetchUserStories(userId: userId, afterCursor: cursor)
         
         switch result {
-        case let .success(stories):
+        case let .success((stories, cursor)):
             
             self.stories = stories
+            self.cursor = cursor
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -138,7 +170,6 @@ private extension ProfilePresenter {
                     stories.map({ story in
                         ProfileViewModel.Story(
                             id: story.id,
-                            title: story.title,
                             coverSource: story.coverSource,
                             coverBackground: story.coverBackground,
                             commentCount: story.commentCount,

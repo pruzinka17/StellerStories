@@ -11,8 +11,8 @@ final class UserService {
     
     private let networkService: NetworkService
     
-    private var userCache: [(Date, User)]
-    private var storyCache: [(Date, String, [Story])]
+    private var userCache: [(date: Date, user: User)]
+    private var storyCache: [(date: Date, id: String, stories: [Story])]
     
     init(networkService: NetworkService) {
         
@@ -28,7 +28,7 @@ extension UserService {
         
         clearUserCache()
         
-        if let (_, user) = userCache.first(where: { $0.1.id == userId } ) {
+        if let (_, user) = userCache.first(where: { $0.user.id == userId } ) {
             
             return .success(user)
         }
@@ -62,26 +62,27 @@ extension UserService {
             userCache.append((Date(), user))
             
             return .success(user)
-            
         case let .failure(error):
             
             return .failure(error)
         }
     }
     
-    func fetchUserStories(userId: String) async -> Result<[Story], Error> {
+    func fetchUserStories(
+        userId: String,
+        afterCursor: String? = nil
+    ) async -> Result<([Story], String?), Error> {
         
-        clearStoryCache()
+        var path = "users/\(userId)/stories?limit=20"
         
-        if let (_, _, stories) = storyCache.first(where: { $0.1 == userId } ) {
+        if let afterCursor = afterCursor {
             
-            return .success(stories)
+            path += "&after=\(afterCursor)"
         }
         
-        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/\(userId)/stories?limit=200")
+        let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: path)
         
         switch result {
-            
         case let .success(response):
             
             var stories: [Story] = []
@@ -106,10 +107,7 @@ extension UserService {
                     ))
             }
             
-            storyCache.append((Date(), userId, stories))
-            
-            return .success(stories)
-            
+            return .success((stories, response.cursor?.after))
         case let .failure(error):
             
             return .failure(error)
@@ -126,12 +124,10 @@ private extension UserService {
         for (date, user) in userCache {
             
             let elapsed = abs(Date().timeIntervalSince(date))
-            print("user cache: " + String(elapsed))
             
             if elapsed > 10 {
                 
-                userCache.removeAll(where: { $0.1.id == user.id })
-                print("cache record removed")
+                userCache.removeAll(where: { $0.user.id == user.id })
             }
         }
     }
@@ -141,12 +137,10 @@ private extension UserService {
         for (date, userId, _) in storyCache {
             
             let elapsed = abs(Date().timeIntervalSince(date))
-            print("story cache: " + String(elapsed))
             
             if elapsed > 10 {
                 
-                storyCache.removeAll(where: { $0.1 == userId } )
-                print("story cache removed")
+                storyCache.removeAll(where: { $0.id == userId } )
             }
         }
     }

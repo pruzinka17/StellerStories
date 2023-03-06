@@ -9,25 +9,23 @@ import Foundation
 
 enum ProfileViewEvents {
     
-    case didScrollStories
+    case didScrollStories(Double, Double)
 }
 
 final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
     
-    private var stories: [Story]
-    
-    private var cursor: String?
-    
     private let userId: String
+    
+    private var stories: [Story]
+    private var storiesCursor: String?
+    private var isFetchingMoreStories: Bool
+    
     
     @Published var viewModel: ProfileViewModel
     @Published var isPresentingStories: Bool
     @Published var initialStoryId: String
-    
-    @Published var position: CGFloat
-    @Published var contentWidth: CGFloat
     
     init(
         userService: UserService,
@@ -36,9 +34,11 @@ final class ProfilePresenter: ObservableObject {
         
         self.userService = userService
         
-        self.stories = []
-        
         self.userId = context.userId
+        
+        self.isFetchingMoreStories = false
+        self.stories = []
+        self.storiesCursor = nil
         
         self.viewModel = ProfileViewModel(
             state: .loading,
@@ -47,9 +47,6 @@ final class ProfilePresenter: ObservableObject {
         
         self.isPresentingStories = false
         self.initialStoryId = ""
-        
-        self.position = 0
-        self.contentWidth = 0
     }
 }
 
@@ -68,14 +65,15 @@ extension ProfilePresenter {
     func handleEvent(_ event: ProfileViewEvents) {
         
         switch event {
-        case .didScrollStories:
-            if position / contentWidth > 0.7 {
+        case let .didScrollStories(offset, storyStripWidth):
+            
+            guard offset / storyStripWidth > 0.7 else {
+                return
+            }
+            
+            Task {
                 
-                Task {
-                    
-                    print("fetching more stories")
-                    await fetchUserStories()
-                }
+                await fetchMoreUserStories()
             }
         }
     }
@@ -156,28 +154,17 @@ private extension ProfilePresenter {
             self?.viewModel.storiesState = .loading
         }
         
-        let result = await userService.fetchUserStories(userId: userId, afterCursor: cursor)
+        let result = await userService.fetchUserStories(userId: userId)
         
         switch result {
         case let .success((stories, cursor)):
             
             self.stories = stories
-            self.cursor = cursor
+            self.storiesCursor = cursor
             
             DispatchQueue.main.async { [weak self] in
                 
-                self?.viewModel.storiesState = .populated(
-                    stories.map({ story in
-                        ProfileViewModel.Story(
-                            id: story.id,
-                            coverSource: story.coverSource,
-                            coverBackground: story.coverBackground,
-                            commentCount: story.commentCount,
-                            likes: story.likes,
-                            aspectRatio: story.aspectRatio
-                        )
-                    })
-                )
+                self?.populateStories()
             }
         case let.failure(error):
             
@@ -188,6 +175,57 @@ private extension ProfilePresenter {
             
             print(error)
         }
+    }
+    
+    func fetchMoreUserStories() async {
+        
+        guard
+            let storiesCursor = storiesCursor,
+            !isFetchingMoreStories
+        else {
+            return
+        }
+        
+        isFetchingMoreStories = true
+        
+        let result = await userService.fetchUserStories(
+            userId: userId,
+            afterCursor: storiesCursor
+        )
+        
+        isFetchingMoreStories = false
+        
+        switch result {
+        case let .success((stories, cursor)):
+            
+            self.stories.append(contentsOf: stories)
+            self.storiesCursor = cursor
+            
+            DispatchQueue.main.async { [weak self] in
+                
+                self?.populateStories()
+            }
+        case let .failure(error):
+            
+            print(error)
+        }
+    }
+    
+    func populateStories() {
+        
+        let items = stories.map({ story in
+            
+            ProfileViewModel.Story(
+                id: story.id,
+                coverSource: story.coverSource,
+                coverBackground: story.coverBackground,
+                commentCount: story.commentCount,
+                likes: story.likes,
+                aspectRatio: story.aspectRatio
+            )
+        })
+        
+        viewModel.storiesState = .populated(items)
     }
 }
 

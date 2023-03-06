@@ -9,7 +9,10 @@ import Foundation
 
 struct StoriesContext {
     
-    let intialStoryId: String
+//    case populated(String, [Story])
+//    case remote([String])
+// zmenit na enum
     
+    let intialStoryId: String
     let stories: [Story]
 }

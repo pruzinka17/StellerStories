@@ -7,6 +7,15 @@
 
 import Foundation
 
+//final class Collection {
+//
+//    let id: String
+//    let name: String
+//    let authorId: String
+//
+//    var savedStories: [String]
+//}
+
 final class UserService {
     
     private let networkService: NetworkService

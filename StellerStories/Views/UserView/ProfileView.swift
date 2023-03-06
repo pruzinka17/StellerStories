@@ -14,7 +14,7 @@ struct ProfileView: View {
     @ObservedObject var presenter: ProfilePresenter
     
     init(userService: UserService, profileContext: ProfileContext) {
-        
+
         self.presenter = ProfilePresenter(
             userService: userService,
             context: profileContext
@@ -210,6 +210,8 @@ private extension ProfileView {
                 .frame(height: Constants.Sizes.storyHeight)
             case let .populated(stories):
                 
+                var storyStripWidth: CGFloat = 0
+                
                 ScrollViewReader { value in
                     
                     ScrollView(.horizontal, showsIndicators: false) {
@@ -223,17 +225,6 @@ private extension ProfileView {
                                     makeStoryItem(story: story, frame: frame)
                                 }
                             }
-                            .background(
-                                
-                                GeometryReader { proxy in
-                                    
-                                    Color.clear.onAppear {
-                                        
-                                        presenter.contentWidth = proxy.size.width
-                                        print("content width: \(proxy.size.width)")
-                                    }
-                                }
-                            )
                             .padding([.leading], Constants.Padding.storiesStackPadding)
                             
                             GeometryReader { proxy in
@@ -243,14 +234,17 @@ private extension ProfileView {
                                         key: OffsetPreferenceKey.self,
                                         value: proxy.frame(in: .named("StoriesScroll")).minX
                                     )
+                                    .onAppear {
+                                        
+                                        storyStripWidth = proxy.size.width
+                                    }
                             }.frame(height: 0)
                         }
                     }
                     .coordinateSpace(name: "StoriesScroll")
                     .onPreferenceChange(OffsetPreferenceKey.self, perform: { value in
                         
-                        presenter.position = value * -1
-                        presenter.handleEvent(.didScrollStories)
+                        presenter.handleEvent(.didScrollStories(value * -1, storyStripWidth))
                         print(value * -1)
                     })
                     .onReceive(presenter.$initialStoryId) { id in

@@ -19,13 +19,13 @@ final class ProfilePresenter: ObservableObject {
     @Published var isPresentingStories: Bool
     @Published var initialStoryId: String
     
-    init(userService: UserService, userId: String) {
+    init(userService: UserService, context: ProfileContext) {
         
         self.userService = userService
         
         self.stories = []
         
-        self.userId = userId
+        self.userId = context.userId
         
         self.viewModel = ProfileViewModel(
             state: .loading,

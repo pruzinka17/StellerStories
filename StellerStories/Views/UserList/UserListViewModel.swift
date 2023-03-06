@@ -21,11 +21,4 @@ struct UserListViewModel {
         let avatarURL: URL
         let avatarBackground: String
     }
-    
-//    enum State<T> {
-//
-//        case loading
-//        case populated(T)
-//        case failure
-//    }
 }

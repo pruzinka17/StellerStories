@@ -11,26 +11,31 @@ struct UserListView: View {
     
     @ObservedObject var presenter: UserListPresenter
     
-    init(userService: UserService, userIds: [String]) {
+    init(userService: UserService, userListContext: UserListContext) {
         self.presenter = UserListPresenter(
             userService: userService,
-            userIds: userIds
+            context: userListContext
         )
     }
     
     var body: some View {
         
-        ZStack {
+        GeometryReader { proxy in
             
-            makeUserList()
-        }
-        .fullScreenCover(isPresented: $presenter.isPresentingProfile, content: {
+            let frame = proxy.frame(in: .local)
             
-            ProfileView(userService: presenter.userService, userId: presenter.userPresented)
-        })
-        .onAppear {
-            
-            presenter.present()
+            ZStack {
+                
+                makeUserList(frame: frame)
+            }
+            .fullScreenCover(isPresented: $presenter.isPresentingProfile, content: {
+                
+                ProfileView(userService: presenter.userService, profileContext: presenter.makeProfileContext())
+            })
+            .onAppear {
+                
+                presenter.present()
+            }
         }
     }
 }
@@ -39,7 +44,7 @@ struct UserListView: View {
 
 private extension UserListView {
     
-    @ViewBuilder func makeUserList() -> some View {
+    @ViewBuilder func makeUserList(frame: CGRect) -> some View {
         
         List {
             
@@ -77,5 +82,6 @@ private extension UserListView {
                 }
             }
         }
+        .listStyle(.plain)
     }
 }

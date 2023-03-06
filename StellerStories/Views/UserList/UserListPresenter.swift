@@ -18,9 +18,9 @@ final class UserListPresenter: ObservableObject {
     
     @Published var isPresentingProfile: Bool
     
-    init(userService: UserService, userIds: [String]) {
+    init(userService: UserService, context: UserListContext) {
         
-        self.userIds = userIds
+        self.userIds = context.userIds
         self.userService = userService
         self.viewModel = UserListViewModel(
             users: []
@@ -38,6 +38,11 @@ extension UserListPresenter {
             
             await fetch()
         }
+    }
+    
+    func makeProfileContext() -> ProfileContext {
+        
+        return ProfileContext(userId: userPresented)
     }
 }
 
@@ -67,7 +72,6 @@ private extension UserListPresenter {
                 
             case let .failure(error):
                 print(error)
-                continue
             }
         }
     }

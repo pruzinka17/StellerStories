@@ -13,11 +13,11 @@ struct ProfileView: View {
     
     @ObservedObject var presenter: ProfilePresenter
     
-    init(userService: UserService, userId: String) {
+    init(userService: UserService, profileContext: ProfileContext) {
         
         self.presenter = ProfilePresenter(
             userService: userService,
-            userId: userId
+            context: profileContext
         )
     }
     
@@ -342,11 +342,3 @@ private extension ProfileView {
         }
     }
 }
-
-//struct ProfileView_Previews: PreviewProvider {
-//
-//    static var previews: some View {
-//
-//        ProfileView(userService: UserService(networkService: NetworkService()))
-//    }
-//}

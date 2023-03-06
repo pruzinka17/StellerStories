@@ -17,6 +17,14 @@ struct ContentView: View {
             networkService: networkService
         )
         
-        UserListView(userService: userService, userIds: ["812249714027136186", "76794126980351029"])
+        UserListView(userService: userService, userListContext: makeUserListContext())
+    }
+}
+
+private extension ContentView {
+    
+    func makeUserListContext() -> UserListContext {
+        
+        return UserListContext(userIds: ["812249714027136186", "76794126980351029"])
     }
 }

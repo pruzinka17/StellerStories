@@ -11,46 +11,71 @@ struct UserListView: View {
     
     @ObservedObject var presenter: UserListPresenter
     
-    init(userService: UserService) {
+    init(userService: UserService, userIds: [String]) {
         self.presenter = UserListPresenter(
             userService: userService,
-            userIds: ["812249714027136186", "76794126980351029"]
+            userIds: userIds
         )
     }
     
     var body: some View {
         
-        switch presenter.viewModel.usersState {
-        case .loading:
-            Text("loading")
+        ZStack {
             
-        case let .populated(users):
-            List {
-                
-                ForEach(users) { user in
-                    
-                    HStack {
-                        
-                        Text(user.userName)
-                        
-                        Text(user.displayName)
-                    }
-                }
-            }
+            makeUserList()
+        }
+        .fullScreenCover(isPresented: $presenter.isPresentingProfile, content: {
             
-        case.failure:
+            ProfileView(userService: presenter.userService, userId: presenter.userPresented)
+        })
+        .onAppear {
             
-            Text("loadFailed")
+            presenter.present()
         }
     }
 }
 
-struct UserListView_Previews: PreviewProvider {
+// MARK: - UserList
+
+private extension UserListView {
     
-    static var previews: some View {
+    @ViewBuilder func makeUserList() -> some View {
         
-        UserListView(
-            userService: UserService(networkService: NetworkService())
-        )
+        List {
+            
+            ForEach(presenter.viewModel.users, id: \.id) { user in
+                
+                HStack {
+                    
+                    VStack {
+                        
+                        AsyncImage(url: user.avatarURL) { image in
+                            
+                            image
+                                .resizable()
+                                .clipShape(Circle())
+                        } placeholder: {
+                            
+                            Color(hex: user.avatarBackground)
+                                .clipShape(Circle())
+                        }
+                    }
+                    .frame(width: 45, height: 45)
+                    
+                    VStack(alignment: .leading) {
+                        
+                        Text(user.userName)
+                        
+                        Text(user.displayName)
+
+                    }
+                }
+                .onTapGesture {
+                    
+                    presenter.userPresented = user.id
+                    presenter.isPresentingProfile = true
+                }
+            }
+        }
     }
 }

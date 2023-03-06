@@ -9,18 +9,35 @@ import Foundation
 
 final class UserListPresenter: ObservableObject {
     
-    private let userService: UserService
+    let userService: UserService
     private let userIds: [String]
     
     @Published var viewModel: UserListViewModel
+    
+    @Published var userPresented: String
+    
+    @Published var isPresentingProfile: Bool
     
     init(userService: UserService, userIds: [String]) {
         
         self.userIds = userIds
         self.userService = userService
         self.viewModel = UserListViewModel(
-            usersState: .loading
+            users: []
         )
+        self.userPresented = ""
+        self.isPresentingProfile = false
+    }
+}
+
+extension UserListPresenter {
+    
+    func present() {
+        
+        Task {
+            
+            await fetch()
+        }
     }
 }
 
@@ -28,14 +45,30 @@ private extension UserListPresenter {
     
     func fetch() async {
         
-        DispatchQueue.main.async { [weak self] in
+        for userId in userIds {
             
-            self?.viewModel.usersState = .loading
-        }
-        
-        for user in userIds {
+            let result = await userService.fetchUser(userId: userId)
             
-            let result = await userService.fetchUser(userId: user)
+            switch result {
+            case let .success(value):
+                
+                let user = UserListViewModel.User(
+                    id: value.id,
+                    displayName: value.displayName,
+                    userName: value.userName,
+                    avatarURL: value.avatarImageUrl,
+                    avatarBackground: value.avatarImageBackground
+                )
+                
+                DispatchQueue.main.async { [weak self] in
+                    
+                    self?.viewModel.users.append(user)
+                }
+                
+            case let .failure(error):
+                print(error)
+                continue
+            }
         }
     }
 }

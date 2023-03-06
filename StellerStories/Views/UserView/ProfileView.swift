@@ -9,12 +9,15 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @Environment(\.dismiss) var dismissCurrentView
+    
     @ObservedObject var presenter: ProfilePresenter
     
-    init(userService: UserService) {
+    init(userService: UserService, userId: String) {
         
         self.presenter = ProfilePresenter(
-            userService: userService
+            userService: userService,
+            userId: userId
         )
     }
     
@@ -114,6 +117,10 @@ private extension ProfileView {
                 width: Constants.Sizes.returnArrowWidth,
                 height: Constants.Sizes.returnArrowHeight
             )
+            .onTapGesture {
+                
+                dismissCurrentView()
+            }
         
         VStack {
             
@@ -336,10 +343,10 @@ private extension ProfileView {
     }
 }
 
-struct ProfileView_Previews: PreviewProvider {
-
-    static var previews: some View {
-
-        ProfileView(userService: UserService(networkService: NetworkService()))
-    }
-}
+//struct ProfileView_Previews: PreviewProvider {
+//
+//    static var previews: some View {
+//
+//        ProfileView(userService: UserService(networkService: NetworkService()))
+//    }
+//}

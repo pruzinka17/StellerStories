@@ -9,7 +9,7 @@ import Foundation
 
 struct UserListViewModel {
     
-    var usersState: State<[User]>
+    var users: [User]
     
     struct User: Identifiable {
         
@@ -18,15 +18,14 @@ struct UserListViewModel {
         let displayName: String
         let userName: String
         
-        let avatarURL: String
+        let avatarURL: URL
         let avatarBackground: String
-        
     }
     
-    enum State<T> {
-        
-        case loading
-        case populated(T)
-        case failure
-    }
+//    enum State<T> {
+//
+//        case loading
+//        case populated(T)
+//        case failure
+//    }
 }

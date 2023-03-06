@@ -13,15 +13,19 @@ final class ProfilePresenter: ObservableObject {
     
     private var stories: [Story]
     
+    private let userId: String
+    
     @Published var viewModel: ProfileViewModel
     @Published var isPresentingStories: Bool
     @Published var initialStoryId: String
     
-    init(userService: UserService) {
+    init(userService: UserService, userId: String) {
         
         self.userService = userService
         
         self.stories = []
+        
+        self.userId = userId
         
         self.viewModel = ProfileViewModel(
             state: .loading,
@@ -81,7 +85,7 @@ private extension ProfilePresenter {
             
         }
 
-        let result = await userService.fetchUser(userId: "812249714027136186")
+        let result = await userService.fetchUser(userId: userId)
         
         switch result {
         case let .success(user):
@@ -121,7 +125,7 @@ private extension ProfilePresenter {
             self?.viewModel.storiesState = .loading
         }
         
-        let result = await userService.fetchUserStories(userId: "812249714027136186")
+        let result = await userService.fetchUserStories(userId: userId)
         
         switch result {
         case let .success(stories):

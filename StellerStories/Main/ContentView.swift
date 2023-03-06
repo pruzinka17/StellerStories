@@ -17,6 +17,6 @@ struct ContentView: View {
             networkService: networkService
         )
         
-        ProfileView(userService: userService)
+        UserListView(userService: userService, userIds: ["812249714027136186", "76794126980351029"])
     }
 }

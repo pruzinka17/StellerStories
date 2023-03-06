@@ -12,29 +12,13 @@ final class UserService {
     private let networkService: NetworkService
     
     private var cache: [(Date, User)]
+    private var storyCache: [(Date, String, [Story])]
     
     init(networkService: NetworkService) {
         
         self.networkService = networkService
         self.cache = []
-    }
-}
-
-private extension UserService {
-    
-    func checkCache() {
-        
-        for record in cache {
-            
-            let elapsed = Date().timeIntervalSince(record.0)
-            print(elapsed)
-            
-            if elapsed > 10 {
-                
-                cache.removeAll(where: { $0.1.id == record.1.id })
-                print("cache record removed")
-            }
-        }
+        self.storyCache = []
     }
 }
 
@@ -92,11 +76,23 @@ extension UserService {
     
     func fetchUserStories(userId: String) async -> Result<[Story], Error> {
         
+        checkStoryCache()
+        
         let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/\(userId)/stories?limit=200")
         
         switch result {
             
         case let .success(response):
+            
+            if storyCache.contains(where: { $0.1 == userId } ) {
+                
+                guard let stories = storyCache.first(where: { $0.1 == userId } )?.2 else {
+                    
+                    return .failure(ParsingErrors.url)
+                }
+                
+                return .success(stories)
+            }
             
             var stories: [Story] = []
             
@@ -120,10 +116,49 @@ extension UserService {
                     ))
             }
             
+            storyCache.append((Date(), userId, stories))
+            
             return .success(stories)
+            
         case let .failure(error):
             
             return .failure(error)
+        }
+    }
+}
+
+// MARK: - cache checking
+
+private extension UserService {
+    
+    func checkCache() {
+        
+        for record in cache {
+            
+            let elapsed = Date().timeIntervalSince(record.0)
+            print(elapsed)
+            
+            if elapsed > 10 {
+                
+                cache.removeAll(where: { $0.1.id == record.1.id })
+                print("cache record removed")
+            }
+        }
+    }
+    
+    func checkStoryCache() {
+        
+        for record in storyCache {
+            
+            let elapsed = Date().timeIntervalSince(record.0)
+            print(elapsed)
+            
+            if elapsed > 20 {
+                
+                storyCache.removeAll(where: { $0.1 == record.1 } )
+                print("story cache removed")
+            }
+            
         }
     }
 }

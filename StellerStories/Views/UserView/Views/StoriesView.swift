@@ -31,7 +31,7 @@ struct StoriesView: View {
             ZStack {
                 
                 Color(hex: presenter.viewModel.viewBackgroundColor)
-                    .animation(.default, value: presenter.viewModel.presentedStoryId)
+                    .animation(.linear, value: presenter.viewModel.presentedStoryId)
                     .ignoresSafeArea()
                     
                 TabView(selection: $presenter.viewModel.presentedStoryId) {

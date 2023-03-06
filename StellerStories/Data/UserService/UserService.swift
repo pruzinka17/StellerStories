@@ -11,13 +11,13 @@ final class UserService {
     
     private let networkService: NetworkService
     
-    private var cache: [(Date, User)]
+    private var userCache: [(Date, User)]
     private var storyCache: [(Date, String, [Story])]
     
     init(networkService: NetworkService) {
         
         self.networkService = networkService
-        self.cache = []
+        self.userCache = []
         self.storyCache = []
     }
 }
@@ -26,23 +26,18 @@ extension UserService {
     
     func fetchUser(userId: String) async -> Result<User, Error> {
         
-        checkCache()
+        clearUserCache()
+        
+        if let (_, user) = userCache.first(where: { $0.1.id == userId } ) {
+            
+            return .success(user)
+        }
         
         let result: Result<UserDTO, Error> = await networkService.fetch(path: "users/\(userId)")
         
         switch result {
             
         case let .success(response):
-            
-            if cache.contains(where: { $0.1.id == response.id } ) {
-                
-                guard let user = cache.first(where: { $0.1.id == response.id } )?.1 else {
-                    
-                    return .failure(ParsingErrors.url)
-                }
-                
-                return .success(user)
-            }
             
             guard let headerImageUrl = URL(string: response.headerImageUrl) else {
                 
@@ -64,7 +59,7 @@ extension UserService {
                 bio: response.bio
             )
             
-            cache.append((Date(), user))
+            userCache.append((Date(), user))
             
             return .success(user)
             
@@ -76,23 +71,18 @@ extension UserService {
     
     func fetchUserStories(userId: String) async -> Result<[Story], Error> {
         
-        checkStoryCache()
+        clearStoryCache()
+        
+        if let (_, _, stories) = storyCache.first(where: { $0.1 == userId } ) {
+            
+            return .success(stories)
+        }
         
         let result: Result<UserStoriesDTO, Error> = await networkService.fetch(path: "users/\(userId)/stories?limit=200")
         
         switch result {
             
         case let .success(response):
-            
-            if storyCache.contains(where: { $0.1 == userId } ) {
-                
-                guard let stories = storyCache.first(where: { $0.1 == userId } )?.2 else {
-                    
-                    return .failure(ParsingErrors.url)
-                }
-                
-                return .success(stories)
-            }
             
             var stories: [Story] = []
             
@@ -127,38 +117,37 @@ extension UserService {
     }
 }
 
-// MARK: - cache checking
+// MARK: - Cache methods
 
 private extension UserService {
     
-    func checkCache() {
+    func clearUserCache() {
         
-        for record in cache {
+        for (date, user) in userCache {
             
-            let elapsed = Date().timeIntervalSince(record.0)
-            print(elapsed)
+            let elapsed = abs(Date().timeIntervalSince(date))
+            print("user cache: " + String(elapsed))
             
             if elapsed > 10 {
                 
-                cache.removeAll(where: { $0.1.id == record.1.id })
+                userCache.removeAll(where: { $0.1.id == user.id })
                 print("cache record removed")
             }
         }
     }
     
-    func checkStoryCache() {
+    func clearStoryCache() {
         
-        for record in storyCache {
+        for (date, userId, _) in storyCache {
             
-            let elapsed = Date().timeIntervalSince(record.0)
-            print(elapsed)
+            let elapsed = abs(Date().timeIntervalSince(date))
+            print("story cache: " + String(elapsed))
             
-            if elapsed > 20 {
+            if elapsed > 10 {
                 
-                storyCache.removeAll(where: { $0.1 == record.1 } )
+                storyCache.removeAll(where: { $0.1 == userId } )
                 print("story cache removed")
             }
-            
         }
     }
 }

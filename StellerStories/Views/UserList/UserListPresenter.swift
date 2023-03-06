@@ -30,6 +30,8 @@ final class UserListPresenter: ObservableObject {
     }
 }
 
+// MARK: - Public methods
+
 extension UserListPresenter {
     
     func present() {
@@ -45,6 +47,8 @@ extension UserListPresenter {
         return ProfileContext(userId: userPresented)
     }
 }
+
+// MARK: - Fetching methods
 
 private extension UserListPresenter {
     

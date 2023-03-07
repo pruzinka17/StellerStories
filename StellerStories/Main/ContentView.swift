@@ -16,8 +16,9 @@ struct ContentView: View {
             
             networkService: networkService
         )
+        let collectionsManager = CollectionsManager()
         
-        UserListView(userService: userService, userListContext: makeUserListContext())
+        UserListView(userService: userService, collectionsManager: collectionsManager, userListContext: makeUserListContext())
     }
 }
 

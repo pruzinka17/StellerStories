@@ -13,10 +13,16 @@ struct ProfileView: View {
     
     @ObservedObject var presenter: ProfilePresenter
     
-    init(userService: UserService, profileContext: ProfileContext) {
-
+    init(
+        
+        userService: UserService,
+        collectionsManager: CollectionsManager,
+        profileContext: ProfileContext
+    ) {
+        
         self.presenter = ProfilePresenter(
             userService: userService,
+            collectionsManager: collectionsManager,
             context: profileContext
         )
     }
@@ -33,15 +39,20 @@ struct ProfileView: View {
                         
                         makeTopBar(safeArea: proxy.safeAreaInsets)
                         
-                        makeStoriesStrip(frame: frame)
-                        
-                        makeSavedStories()
+                        ScrollView {
+                            
+                            VStack {
+                                
+                                makeStoriesStrip(frame: frame)
+                                
+                                makeCollections()
+                            }
+                        }
                     }
                     .ignoresSafeArea()
             }
         }
         .fullScreenCover(
-            
             isPresented: $presenter.isPresentingStories,
             content: {
                 
@@ -50,6 +61,12 @@ struct ProfileView: View {
                     eventHadler: presenter.makeStoriesEventHandler()
                 )
             })
+        .sheet(isPresented: $presenter.isPresentingCollectionSheet, content: {
+            
+            Color.blue
+                .presentationDetents([.fraction(0.2)])
+                .ignoresSafeArea()
+        })
         .onAppear {
             
             presenter.present()
@@ -59,9 +76,48 @@ struct ProfileView: View {
 
 private extension ProfileView {
     
-    @ViewBuilder func makeSavedStories() -> some View {
+    @ViewBuilder func makeCollections() -> some View {
         
+        VStack {
+            
+            HStack {
+
+                Text(Constants.Text.collectionSectionHeader)
+                    .font(.Shared.sectionHeader)
+
+                Spacer()
+                
+                Button("Add Collection") {
+                    
+                    presenter.isPresentingCollectionSheet = true
+                }
+                .buttonStyle(AddCollectionButtonStyle())
+            }
+            .padding([.leading, .top, .trailing])
+            
+            switch presenter.viewModel.collections {
+            case let .populated(collections):
+                ScrollView(.horizontal, showsIndicators: false) {
+                    
+                    ForEach(collections, id: \.id) { collection in
+                        
+                        collectionCover(name: collection.name, numberOfSaves: collection.numberOfSaves)
+                    }
+                }
+                
+            case .empty:
+                Text("add collection")
+            }
+        }
+    }
+    
+    @ViewBuilder func collectionCover(name: String, numberOfSaves: String) -> some View {
         
+        HStack {
+            
+            Text(name)
+            Text(numberOfSaves)
+        }
     }
 }
 
@@ -296,7 +352,7 @@ private extension ProfileView {
         .overlay(alignment: .bottomTrailing, content: {
             
             let commentCount = story.commentCount
-            let likes = story.likes
+            let likes = story.likeCount
             
             HStack {
                 
@@ -341,6 +397,7 @@ private extension ProfileView {
             static let connectionErrorText: String = "connection error"
             static let followActionButtonText: String = "Follow"
             static let storiesSectionHeader: String = "Stories"
+            static let collectionSectionHeader: String = "Collections"
         }
         
         enum Padding {
@@ -382,6 +439,6 @@ struct ProfileView_Previews: PreviewProvider {
     
     static var previews: some View {
         
-        ProfileView(userService: UserService(networkService: NetworkService()), profileContext: ProfileContext(userId: "76794126980351029"))
+        ProfileView(userService: UserService(networkService: NetworkService()), collectionsManager: CollectionsManager(), profileContext: ProfileContext(userId: "76794126980351029"))
     }
 }

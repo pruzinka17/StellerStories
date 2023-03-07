@@ -11,6 +11,7 @@ struct ProfileViewModel {
     
     var state: State<User>
     var storiesState: State<[Story]>
+    var collections: CollectionState
     
     struct Story {
         
@@ -20,7 +21,7 @@ struct ProfileViewModel {
         let coverBackground: String
         
         let commentCount: Int
-        let likes: Int // TODO: Rename
+        let likeCount: Int
         
         let aspectRatio: AspectRatio
     }
@@ -37,6 +38,19 @@ struct ProfileViewModel {
         let avatarImageBackground: String
         
         let bio: String?
+    }
+    
+    enum CollectionState {
+        
+        case populated([Collection])
+        case empty
+        
+        struct Collection {
+            
+            let id: String
+            let name: String
+            let numberOfSaves: String
+        }
     }
     
     enum State<T> {

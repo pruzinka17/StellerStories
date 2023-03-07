@@ -7,28 +7,6 @@
 
 import Foundation
 
-final class Collection: Codable {
-        
-    let id: String
-    let name: String
-    let userId: String
-    
-    var storyIds: [String]
-    
-    init(
-        id: String,
-        name: String,
-        userId: String
-    ) {
-        
-        self.id = id
-        self.name = name
-        self.userId = userId
-        
-        self.storyIds = []
-    }
-}
-
 final class CollectionsManager {
     
     private let userDefaults: UserDefaults
@@ -60,7 +38,7 @@ extension CollectionsManager {
         and userId: String
     ) -> Collection? {
         
-        let collections =  provideCollections(for: userId)
+        let collections = provideCollections(for: userId)
         
         return collections.first(where: { $0.id == id })
     }
@@ -144,24 +122,18 @@ extension CollectionsManager {
         userDefaults.set(collections, forKey: userId)
     }
     
-    func isStoryInAnyCollection(
+    func isStorySaved(
         userId: String,
         storyId: String
     ) -> Bool {
         
-        let collections = provideCollections(for: userId)
-        
-        for collection in collections {
-            
-            if collection.storyIds.contains(storyId) {
-                return true
-            }
-        }
-        
-        return false
+        return !storyInCollections(
+            userId: userId,
+            storyId: storyId
+        ).isEmpty
     }
     
-    func collectionsWithStorySaved(
+    func storyInCollections(
         userId: String,
         storyId: String
     ) -> [String] {

@@ -9,9 +9,13 @@ import SwiftUI
 
 struct UserListView: View {
     
+    private let collectionsManager: CollectionsManager
+    
     @ObservedObject var presenter: UserListPresenter
     
-    init(userService: UserService, userListContext: UserListContext) {
+    init(userService: UserService, collectionsManager: CollectionsManager, userListContext: UserListContext) {
+        
+        self.collectionsManager = collectionsManager
         self.presenter = UserListPresenter(
             userService: userService,
             context: userListContext
@@ -30,7 +34,7 @@ struct UserListView: View {
             }
             .fullScreenCover(isPresented: $presenter.isPresentingProfile, content: {
                 
-                ProfileView(userService: presenter.userService, profileContext: presenter.makeProfileContext())
+                ProfileView(userService: presenter.userService, collectionsManager: collectionsManager, profileContext: presenter.makeProfileContext())
             })
             .onAppear {
                 

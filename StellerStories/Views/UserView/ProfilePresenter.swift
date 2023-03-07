@@ -15,37 +15,48 @@ enum ProfileViewEvents {
 final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
+    private let collectionsManager: CollectionsManager
     
     private let userId: String
     
+    private var user: User?
+        
     private var stories: [Story]
     private var storiesCursor: String?
     private var isFetchingMoreStories: Bool
     
     
     @Published var viewModel: ProfileViewModel
+    
     @Published var isPresentingStories: Bool
+    @Published var isPresentingCollectionSheet: Bool
+    
     @Published var initialStoryId: String
     
     init(
         userService: UserService,
+        collectionsManager: CollectionsManager,
         context: ProfileContext
     ) {
         
         self.userService = userService
+        self.collectionsManager = collectionsManager
         
         self.userId = context.userId
         
-        self.isFetchingMoreStories = false
         self.stories = []
         self.storiesCursor = nil
+        self.isFetchingMoreStories = false
         
         self.viewModel = ProfileViewModel(
             state: .loading,
-            storiesState: .loading
+            storiesState: .loading,
+            collections: .empty
         )
         
         self.isPresentingStories = false
+        self.isPresentingCollectionSheet = false
+        
         self.initialStoryId = ""
     }
 }
@@ -59,6 +70,11 @@ extension ProfilePresenter {
         Task {
             
             await fetch()
+        }
+        
+        if user != nil {
+            
+            updateCollections()
         }
     }
     
@@ -102,22 +118,72 @@ extension ProfilePresenter {
     }
 }
 
+// MARK: - Public collection methods
+
+extension ProfilePresenter {
+    
+    func addCollection() {
+        
+    }
+    
+    func removeCollection() {
+        
+    }
+}
+
+// MARK: - Collections methods
+
+private extension ProfilePresenter {
+    
+    func updateCollections() {
+        
+        let collections = collectionsManager.provideCollections(for: userId)
+        
+        var items: [ProfileViewModel.CollectionState.Collection] = []
+        
+        for collection in collections {
+            
+            let item = ProfileViewModel.CollectionState.Collection(
+                id: collection.id,
+                name: collection.name,
+                numberOfSaves: String(collection.storyIds.count)
+            )
+            
+            items.append(item)
+        }
+        
+        if items.isEmpty {
+            
+            viewModel.collections = .empty
+        } else {
+            
+            viewModel.collections = .populated(items)
+        }
+    }
+}
+
 // MARK: - Fetching methods
 
 private extension ProfilePresenter {
     
     func fetch() async {
         
+        guard user == nil else {
+            
+            return
+        }
+        
         DispatchQueue.main.async { [weak self] in
             
             self?.viewModel.state = .loading
-            
         }
-
+        
         let result = await userService.fetchUser(userId: userId)
         
         switch result {
         case let .success(user):
+            
+            self.user = user
             
             DispatchQueue.main.async { [weak self] in
                 
@@ -132,6 +198,7 @@ private extension ProfilePresenter {
                 )
                 
                 self?.viewModel.state = .populated(user)
+                self?.updateCollections()
             }
             
             await fetchUserStories()
@@ -220,7 +287,7 @@ private extension ProfilePresenter {
                 coverSource: story.coverSource,
                 coverBackground: story.coverBackground,
                 commentCount: story.commentCount,
-                likes: story.likes,
+                likeCount: story.likes,
                 aspectRatio: story.aspectRatio
             )
         })

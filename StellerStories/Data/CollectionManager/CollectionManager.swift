@@ -26,11 +26,15 @@ extension CollectionsManager {
     ) -> [Collection] {
         
         let key = userId
-        let collections = userDefaults.array(
-            forKey: key
-        ) as? [Collection]
         
-        return collections ?? []
+        guard
+            let data = userDefaults.object(forKey: key) as? Data,
+            let collections = try? JSONDecoder().decode([Collection].self, from: data)
+        else {
+            return []
+        }
+        
+        return collections
     }
     
     func provideCollection(
@@ -43,7 +47,10 @@ extension CollectionsManager {
         return collections.first(where: { $0.id == id })
     }
     
-    func createCollection(for userId: String, name: String) -> Bool {
+    func createCollection(
+        for userId: String,
+        name: String
+    ) -> Bool {
         
         var collections = provideCollections(for: userId)
         
@@ -60,7 +67,13 @@ extension CollectionsManager {
         
         collections.append(newCollection)
         
-        userDefaults.set(collections, forKey: userId)
+        guard
+            let encoded = try? JSONEncoder().encode(collections)
+        else {
+            return false
+        }
+        
+        userDefaults.set(encoded, forKey: userId)
         
         return true
     }
@@ -69,8 +82,14 @@ extension CollectionsManager {
         
         var collections = provideCollections(for: userId)
         collections.removeAll { $0.id == id }
+        
+        guard
+            let encoded = try? JSONEncoder().encode(collections)
+        else {
+            return
+        }
 
-        userDefaults.set(collections, forKey: userId)
+        userDefaults.set(encoded, forKey: userId)
     }
 }
 

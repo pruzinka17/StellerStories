@@ -31,6 +31,8 @@ final class ProfilePresenter: ObservableObject {
     @Published var isPresentingStories: Bool
     @Published var isPresentingCollectionSheet: Bool
     
+    @Published var addCollectionText: String
+    
     @Published var initialStoryId: String
     
     init(
@@ -56,6 +58,8 @@ final class ProfilePresenter: ObservableObject {
         
         self.isPresentingStories = false
         self.isPresentingCollectionSheet = false
+        
+        self.addCollectionText = ""
         
         self.initialStoryId = ""
     }
@@ -124,10 +128,16 @@ extension ProfilePresenter {
     
     func addCollection() {
         
+        collectionsManager.createCollection(for: userId, name: addCollectionText)
+        addCollectionText = ""
+        updateCollections()
+        isPresentingCollectionSheet = false
     }
     
-    func removeCollection() {
+    func removeCollection(for collectionId: String) {
         
+        collectionsManager.removeCollection(for: collectionId, and: userId)
+        updateCollections()
     }
 }
 

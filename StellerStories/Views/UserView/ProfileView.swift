@@ -63,9 +63,8 @@ struct ProfileView: View {
             })
         .sheet(isPresented: $presenter.isPresentingCollectionSheet, content: {
             
-            Color.blue
-                .presentationDetents([.fraction(0.2)])
-                .ignoresSafeArea()
+            makeCollectionSheet()
+                .presentationDetents([.fraction(0.5)])
         })
         .onAppear {
             
@@ -73,6 +72,38 @@ struct ProfileView: View {
         }
     }
 }
+
+// MARK: - Collection sheet
+
+private extension ProfileView {
+    
+    @ViewBuilder func makeCollectionSheet() -> some View {
+        
+        VStack {
+            
+            Text("Enter Collection name")
+            
+            TextField("", text: $presenter.addCollectionText)
+                .foregroundColor(.black)
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled(true)
+                .background {
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(.gray)
+                }
+                .frame(width: 250, height: 40)
+            
+            Button("submit") {
+                
+                presenter.addCollection()
+            }
+            .buttonStyle(AddCollectionButtonStyle())
+        }
+    }
+}
+
+// MARK: - Collections
 
 private extension ProfileView {
     
@@ -99,25 +130,53 @@ private extension ProfileView {
             case let .populated(collections):
                 ScrollView(.horizontal, showsIndicators: false) {
                     
-                    ForEach(collections, id: \.id) { collection in
+                    HStack {
                         
-                        collectionCover(name: collection.name, numberOfSaves: collection.numberOfSaves)
+                        ForEach(collections, id: \.id) { collection in
+                            
+                            collectionCover(collection: collection)
+                        }
                     }
+                    .padding([.leading, .trailing])
                 }
                 
             case .empty:
                 Text("add collection")
+                    .padding()
             }
         }
     }
     
-    @ViewBuilder func collectionCover(name: String, numberOfSaves: String) -> some View {
+    @ViewBuilder func collectionCover(collection: ProfileViewModel.CollectionState.Collection) -> some View {
         
-        HStack {
+        ZStack(alignment: .topTrailing) {
             
-            Text(name)
-            Text(numberOfSaves)
+            HStack {
+                
+                Text(collection.name)
+                Text(collection.numberOfSaves)
+            }
+            .padding(6)
+            .background {
+                
+                RoundedRectangle(cornerRadius: 5)
+                    .foregroundColor(.blue)
+            }
+            
+            Circle()
+                .foregroundColor(.white)
+                .frame(width: 20, height: 20)
+                .overlay {
+                    Text("X")
+                        .fontWeight(.bold)
+                        .foregroundColor(.red)
+                }
+                .onTapGesture {
+                    
+                    presenter.removeCollection(for: collection.id)
+                }
         }
+        .frame(width: 120, height: 25)
     }
 }
 
@@ -312,7 +371,6 @@ private extension ProfileView {
                     .onPreferenceChange(OffsetPreferenceKey.self, perform: { value in
                         
                         presenter.handleEvent(.didScrollStories(value * -1, storyStripWidth))
-                        print(value * -1)
                     })
                     .onReceive(presenter.$initialStoryId) { id in
                         

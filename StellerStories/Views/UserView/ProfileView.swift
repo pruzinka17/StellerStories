@@ -28,13 +28,16 @@ struct ProfileView: View {
             GeometryReader { proxy in
                 
                 let frame = proxy.frame(in: .local)
-                
-                VStack {
                     
-                    makeTopBar(safeArea: proxy.safeAreaInsets)
-                    makeStoriesStrip(frame: frame)
-                }
-                .ignoresSafeArea()
+                    VStack {
+                        
+                        makeTopBar(safeArea: proxy.safeAreaInsets)
+                        
+                        makeStoriesStrip(frame: frame)
+                        
+                        makeSavedStories()
+                    }
+                    .ignoresSafeArea()
             }
         }
         .fullScreenCover(
@@ -51,6 +54,14 @@ struct ProfileView: View {
             
             presenter.present()
         }
+    }
+}
+
+private extension ProfileView {
+    
+    @ViewBuilder func makeSavedStories() -> some View {
+        
+        
     }
 }
 
@@ -364,5 +375,13 @@ private extension ProfileView {
             static let followButtonHeight: CGFloat = 32
             static let moreActionsButtonSize: CGFloat = 33
         }
+    }
+}
+
+struct ProfileView_Previews: PreviewProvider {
+    
+    static var previews: some View {
+        
+        ProfileView(userService: UserService(networkService: NetworkService()), profileContext: ProfileContext(userId: "76794126980351029"))
     }
 }

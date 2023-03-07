@@ -15,6 +15,7 @@
 		F7176C4D29A12D570059340E /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4C29A12D570059340E /* Story.swift */; };
 		F719593329B22A090098610F /* StoriesEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719593229B22A090098610F /* StoriesEventHandler.swift */; };
 		F719593529B241980098610F /* ProfileContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F719593429B241980098610F /* ProfileContext.swift */; };
+		F77BADA029B7221E00F8A276 /* SavedStoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77BAD9F29B7221E00F8A276 /* SavedStoriesManager.swift */; };
 		F7C8374E29A7AA4400E2A629 /* StoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7C8374D29A7AA4400E2A629 /* StoriesView.swift */; };
 		F7D946FD29AE371A003B1EC4 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */; };
 		F7D9470229AE386F003B1EC4 /* StoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */; };
@@ -45,6 +46,7 @@
 		F7176C4C29A12D570059340E /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		F719593229B22A090098610F /* StoriesEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesEventHandler.swift; sourceTree = "<group>"; };
 		F719593429B241980098610F /* ProfileContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContext.swift; sourceTree = "<group>"; };
+		F77BAD9F29B7221E00F8A276 /* SavedStoriesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedStoriesManager.swift; sourceTree = "<group>"; };
 		F7C8374D29A7AA4400E2A629 /* StoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StoriesView.swift; path = ../UserView/Views/StoriesView.swift; sourceTree = "<group>"; };
 		F7D946FC29AE371A003B1EC4 /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		F7D9470129AE386F003B1EC4 /* StoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoriesPresenter.swift; sourceTree = "<group>"; };
@@ -104,6 +106,14 @@
 				F7176C4A29A0DDBA0059340E /* UserService.swift */,
 			);
 			path = UserService;
+			sourceTree = "<group>";
+		};
+		F77BAD9E29B7220200F8A276 /* SavedStoriesManager */ = {
+			isa = PBXGroup;
+			children = (
+				F77BAD9F29B7221E00F8A276 /* SavedStoriesManager.swift */,
+			);
+			path = SavedStoriesManager;
 			sourceTree = "<group>";
 		};
 		F7D946FA29AE3704003B1EC4 /* UI */ = {
@@ -188,6 +198,7 @@
 				F7E2F74329B61094007D32DF /* OffsetPreferenceKey.swift */,
 				F7DDE9AD299E7663009C9E45 /* NetworkService */,
 				F7176C4929A0DDA70059340E /* UserService */,
+				F77BAD9E29B7220200F8A276 /* SavedStoriesManager */,
 				F7DDE9AE299E794C009C9E45 /* DTO */,
 			);
 			path = Data;
@@ -315,6 +326,7 @@
 				F719593529B241980098610F /* ProfileContext.swift in Sources */,
 				F7176C4629A0DA9C0059340E /* ProfileViewModel.swift in Sources */,
 				F7E7970429B0DFD900250083 /* UserListViewModel.swift in Sources */,
+				F77BADA029B7221E00F8A276 /* SavedStoriesManager.swift in Sources */,
 				F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
 				F7E2F74429B61094007D32DF /* OffsetPreferenceKey.swift in Sources */,

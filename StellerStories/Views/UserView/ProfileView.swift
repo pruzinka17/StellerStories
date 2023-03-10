@@ -91,6 +91,7 @@ private extension ProfileView {
                     
                     RoundedRectangle(cornerRadius: 10)
                         .foregroundColor(.gray)
+                        .opacity(0.1)
                 }
                 .frame(width: 250, height: 40)
             
@@ -149,34 +150,22 @@ private extension ProfileView {
     
     @ViewBuilder func collectionCover(collection: ProfileViewModel.CollectionState.Collection) -> some View {
         
-        ZStack(alignment: .topTrailing) {
+        HStack {
             
-            HStack {
-                
-                Text(collection.name)
-                Text(collection.numberOfSaves)
-            }
-            .padding(6)
-            .background {
-                
-                RoundedRectangle(cornerRadius: 5)
-                    .foregroundColor(.blue)
-            }
-            
-            Circle()
-                .foregroundColor(.white)
-                .frame(width: 20, height: 20)
-                .overlay {
-                    Text("X")
-                        .fontWeight(.bold)
-                        .foregroundColor(.red)
-                }
-                .onTapGesture {
-                    
-                    presenter.removeCollection(for: collection.id)
-                }
+            Text(collection.name)
+            //Text(collection.numberOfSaves)
         }
-        .frame(width: 120, height: 25)
+        .padding(6)
+        .background {
+            
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.gray)
+                .opacity(0.1)
+        }
+        .onTapGesture {
+                
+            presenter.removeCollection(for: collection.id)
+        }
     }
 }
 

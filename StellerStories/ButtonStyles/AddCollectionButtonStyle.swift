@@ -15,7 +15,8 @@ struct AddCollectionButtonStyle: ButtonStyle {
             .fontWeight(.bold)
             .foregroundColor(.black)
             .font(.system(size: 12))
-            .padding()
+            .padding([.leading, .trailing])
+            .padding([.top, .bottom], 10)
             .background {
                 
                 RoundedRectangle(cornerRadius: 20)

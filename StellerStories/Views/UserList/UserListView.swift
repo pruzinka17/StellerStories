@@ -74,8 +74,10 @@ private extension UserListView {
                     VStack(alignment: .leading) {
                         
                         Text(user.userName)
+                            .font(.Shared.userName)
                         
                         Text(user.displayName)
+                            .font(.Shared.displayName)
 
                     }
                 }

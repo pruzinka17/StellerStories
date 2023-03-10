@@ -15,7 +15,7 @@ enum ProfileViewEvents {
 final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
-    private let collectionsManager: CollectionsManager
+    let collectionsManager: CollectionsManager
     
     private let userId: String
     
@@ -101,6 +101,7 @@ extension ProfilePresenter {
     func makeStoriesContext() -> StoriesContext {
         
         return StoriesContext(
+            userId: userId,
             intialStoryId: initialStoryId,
             stories: stories
         )
@@ -139,11 +140,6 @@ extension ProfilePresenter {
         collectionsManager.removeCollection(for: collectionId, and: userId)
         updateCollections()
     }
-}
-
-// MARK: - Collections methods
-
-private extension ProfilePresenter {
     
     func updateCollections() {
         

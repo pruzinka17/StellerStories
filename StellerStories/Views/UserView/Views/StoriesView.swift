@@ -15,12 +15,14 @@ struct StoriesView: View {
     
     init(
         context: StoriesContext,
-        eventHadler: StoriesEventHandler
+        eventHadler: StoriesEventHandler,
+        collectionsManager: CollectionsManager
     ) {
         
         self.presenter = StoriesPresenter(
             context: context,
-            eventHandler: eventHadler
+            eventHandler: eventHadler,
+            collectionsManager: collectionsManager
         )
     }
     
@@ -44,9 +46,76 @@ struct StoriesView: View {
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
-        }.onAppear {
+        }
+        .sheet(isPresented: $presenter.isPresentingCollections, content: {
+            
+            makeCollectionSheet()
+                .presentationDetents([.fraction(0.1)])
+                .onDisappear {
+                    
+                    presenter.saveCurrentStory()
+                }
+        })
+        .onAppear {
             
             presenter.present()
+        }
+    }
+}
+
+private extension StoriesView {
+    
+    @ViewBuilder func makeCollectionSheet() -> some View {
+            
+        switch presenter.viewModel.collections {
+        case let .populated(collections):
+            ScrollView(.horizontal, showsIndicators: false) {
+                
+                HStack {
+                    
+                    ForEach(collections, id: \.id) { collection in
+                        
+                        collectionCover(collection: collection)
+                    }
+                }
+                .padding([.leading, .trailing])
+            }
+            
+        case .empty:
+            Text("add collection")
+                .padding()
+        }
+    }
+    
+    @ViewBuilder func collectionCover(collection: StoriesViewModel.CollectionState.Collection) -> some View {
+        
+        let toBeSavedTo = presenter.collectionsToSaveTo.contains(where: { $0 == collection.id } )
+        let alreadyInCollection = presenter.savedInCollection(collectionId: collection.id)
+        
+        ZStack(alignment: .topTrailing) {
+            
+            HStack {
+                
+                Text(collection.name)
+                    .fontWeight(.bold)
+                
+                Text(collection.numberOfSaves)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+            }
+            .padding(6)
+            .background {
+                
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(alreadyInCollection ? .red : .gray)
+                    .opacity(0.1)
+            }
+            .opacity(toBeSavedTo ? 0.5 : 1)
+            
+        }
+        .onTapGesture {
+            
+            presenter.addToBeSaved(collectionId: collection.id)
         }
     }
 }
@@ -56,6 +125,8 @@ struct StoriesView: View {
 private extension StoriesView {
     
     @ViewBuilder func makeStory(story: Story, proxy: GeometryProxy) -> some View {
+        
+        let isStoryInCollection = presenter.isStoryInCollection(for: story.id)
             
         GeometryReader { proxy in
                 
@@ -74,10 +145,11 @@ private extension StoriesView {
                     
                     Button {
                         
-                        
+                        presenter.updateCollections()
+                        presenter.isPresentingCollections = true
                     } label: {
                         
-                        Image(systemName: "bookmark")
+                        Image(systemName: isStoryInCollection ? "bookmark.fill" : "bookmark")
                             .font(.title2)
                             .foregroundColor(.white)
                     }

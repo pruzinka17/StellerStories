@@ -67,13 +67,7 @@ extension CollectionsManager {
         
         collections.append(newCollection)
         
-        guard
-            let encoded = try? JSONEncoder().encode(collections)
-        else {
-            return false
-        }
-        
-        userDefaults.set(encoded, forKey: userId)
+        updateCollections(userId: userId, collections: collections)
         
         return true
     }
@@ -83,13 +77,7 @@ extension CollectionsManager {
         var collections = provideCollections(for: userId)
         collections.removeAll { $0.id == id }
         
-        guard
-            let encoded = try? JSONEncoder().encode(collections)
-        else {
-            return
-        }
-
-        userDefaults.set(encoded, forKey: userId)
+        updateCollections(userId: userId, collections: collections)
     }
 }
 
@@ -98,7 +86,7 @@ extension CollectionsManager {
 extension CollectionsManager {
     
     func addStoryToCollections(
-        to collectionIds: [String],
+        collectionIds: [String],
         userId: String,
         storyId: String
     ) {
@@ -118,7 +106,7 @@ extension CollectionsManager {
             collection.storyIds.append(storyId)
         }
         
-        userDefaults.set(collections, forKey: userId)
+        updateCollections(userId: userId, collections: collections)
     }
     
     func removeStoryFromCollections(
@@ -138,7 +126,7 @@ extension CollectionsManager {
             collection.storyIds.removeAll(where: { $0 == storyId } )
         }
         
-        userDefaults.set(collections, forKey: userId)
+        updateCollections(userId: userId, collections: collections)
     }
     
     func isStorySaved(
@@ -170,5 +158,21 @@ extension CollectionsManager {
         }
         
         return collectionsWithStory
+    }
+}
+
+// MARK: - helper methods
+
+private extension CollectionsManager {
+    
+    func updateCollections(userId: String, collections: [Collection]) {
+        
+        guard
+            let encoded = try? JSONEncoder().encode(collections)
+        else {
+            return
+        }
+    
+        userDefaults.set(encoded, forKey: userId)
     }
 }

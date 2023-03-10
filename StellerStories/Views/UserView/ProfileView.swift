@@ -58,8 +58,13 @@ struct ProfileView: View {
                 
                 StoriesView(
                     context: presenter.makeStoriesContext(),
-                    eventHadler: presenter.makeStoriesEventHandler()
+                    eventHadler: presenter.makeStoriesEventHandler(),
+                    collectionsManager: presenter.collectionsManager
                 )
+                .onDisappear {
+                    
+                    presenter.updateCollections()
+                }
             })
         .fullScreenCover(isPresented: $presenter.isPresentingCollection, content: {
             

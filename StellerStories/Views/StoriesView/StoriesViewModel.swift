@@ -14,4 +14,19 @@ struct StoriesViewModel {
     var viewBackgroundColor: String
     
     var stories: [Story]
+    
+    var collections: CollectionState
+    
+    enum CollectionState {
+        
+        case populated([Collection])
+        case empty
+        
+        struct Collection {
+            
+            let id: String
+            let name: String
+            let numberOfSaves: String
+        }
+    }
 }

@@ -12,27 +12,102 @@ final class StoriesPresenter: ObservableObject {
     
     private let context: StoriesContext
     private let eventHandler: StoriesEventHandler
-    
-    @Published var viewModel: StoriesViewModel
+    private let collectionsManager: CollectionsManager
     
     private var isConfigured: Bool
     private var cancellables: Set<AnyCancellable>
     
+    @Published var viewModel: StoriesViewModel
+    
+    @Published var isPresentingCollections: Bool
+    
+    @Published var collectionsToSaveTo: [String]
+    
     init(
         context: StoriesContext,
-        eventHandler: StoriesEventHandler
+        eventHandler: StoriesEventHandler,
+        collectionsManager: CollectionsManager
     ) {
         
         self.context = context
         self.eventHandler = eventHandler
-        self.viewModel = StoriesViewModel(
-            presentedStoryId: context.intialStoryId,
-            viewBackgroundColor: Constants.defaultBackgroundColor,
-            stories: context.stories
-        )
+        self.collectionsManager = collectionsManager
         
         self.isConfigured = false
         self.cancellables = Set<AnyCancellable>()
+        
+        self.viewModel = StoriesViewModel(
+            presentedStoryId: context.intialStoryId,
+            viewBackgroundColor: Constants.defaultBackgroundColor,
+            stories: context.stories,
+            collections: .empty
+        )
+        
+        self.isPresentingCollections = false
+        
+        self.collectionsToSaveTo = []
+    }
+}
+
+// MARK: - Collection methods
+
+extension StoriesPresenter {
+    
+    func savedInCollection(collectionId: String) -> Bool {
+        
+        let collections = collectionsManager.storyInCollections(userId: context.userId, storyId: viewModel.presentedStoryId)
+        
+        return collections.contains(where: { $0 == collectionId } )
+    }
+    
+    func addToBeSaved(collectionId: String) {
+        
+        collectionsToSaveTo.append(collectionId)
+    }
+    
+    func saveCurrentStory() {
+        
+        saveStoryToCollections(storyId: viewModel.presentedStoryId, collectionIds: collectionsToSaveTo)
+        collectionsToSaveTo = []
+    }
+    
+    func isStoryInCollection(for storyId: String) -> Bool {
+        
+        return collectionsManager.isStorySaved(userId: context.userId, storyId: storyId)
+    }
+    
+    func updateCollections() {
+        
+        let collections = collectionsManager.provideCollections(for: context.userId)
+        
+        var items: [StoriesViewModel.CollectionState.Collection] = []
+        
+        for collection in collections {
+            
+            let item = StoriesViewModel.CollectionState.Collection(
+                id: collection.id,
+                name: collection.name,
+                numberOfSaves: String(collection.storyIds.count)
+            )
+            
+            items.append(item)
+        }
+        
+        if items.isEmpty {
+            
+            viewModel.collections = .empty
+        } else {
+            
+            viewModel.collections = .populated(items)
+        }
+    }
+}
+
+private extension StoriesPresenter {
+    
+    func saveStoryToCollections(storyId: String, collectionIds: [String]) {
+        
+        collectionsManager.addStoryToCollections(collectionIds: collectionIds, userId: context.userId, storyId: storyId)
     }
 }
 

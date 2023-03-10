@@ -13,6 +13,7 @@ struct StoriesContext {
 //    case remote([String])
 // zmenit na enum
     
+    let userId: String
     let intialStoryId: String
     let stories: [Story]
 }

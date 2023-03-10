@@ -68,7 +68,7 @@ extension UserService {
         }
     }
     
-    //TODO: make user cache
+    //TODO: make story cache
     
     func fetchUserStories(
         userId: String,

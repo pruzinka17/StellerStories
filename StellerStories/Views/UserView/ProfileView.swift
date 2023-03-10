@@ -61,10 +61,9 @@ struct ProfileView: View {
                     eventHadler: presenter.makeStoriesEventHandler()
                 )
             })
-        .sheet(isPresented: $presenter.isPresentingCollectionSheet, content: {
+        .fullScreenCover(isPresented: $presenter.isPresentingCollection, content: {
             
             makeCollectionSheet()
-                .presentationDetents([.fraction(0.5)])
         })
         .onAppear {
             
@@ -121,7 +120,7 @@ private extension ProfileView {
                 
                 Button("Add Collection") {
                     
-                    presenter.isPresentingCollectionSheet = true
+                    presenter.isPresentingCollection = true
                 }
                 .buttonStyle(AddCollectionButtonStyle())
             }
@@ -150,21 +149,34 @@ private extension ProfileView {
     
     @ViewBuilder func collectionCover(collection: ProfileViewModel.CollectionState.Collection) -> some View {
         
-        HStack {
+        ZStack(alignment: .topTrailing) {
             
-            Text(collection.name)
-            //Text(collection.numberOfSaves)
-        }
-        .padding(6)
-        .background {
-            
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(.gray)
-                .opacity(0.1)
-        }
-        .onTapGesture {
+            HStack {
                 
-            presenter.removeCollection(for: collection.id)
+                Text(collection.name)
+                    .fontWeight(.bold)
+                
+                Text(collection.numberOfSaves)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+                
+                Image(systemName: "x.circle.fill")
+                    .onTapGesture {
+                        
+                        withAnimation {
+                            
+                            presenter.removeCollection(for: collection.id)
+                        }
+                    }
+                    .padding([.leading])
+            }
+            .padding(6)
+            .background {
+                
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(.gray)
+                    .opacity(0.1)
+            }
         }
     }
 }

@@ -69,20 +69,36 @@ private extension StoriesView {
                 Color(hex: story.coverBackground)
             }
             .overlay(
+                
+                HStack {
+                    
+                    Button {
+                        
+                        
+                    } label: {
+                        
+                        Image(systemName: "bookmark")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    
+                    Spacer()
+                    
+                    Button {
 
-                Button {
+                        dismissCurrentView()
+                        presenter.handleClose()
+                    } label: {
 
-                    dismissCurrentView()
-                    presenter.handleClose()
-                } label: {
-
-                    Image(systemName: "xmark")
-                        .font(.title2)
-                        .foregroundColor(.white)
+                        Image(systemName: "xmark")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
                 }
-                .padding()
 
-                , alignment: .topTrailing
+                , alignment: .top
             )
             .rotation3DEffect(
                 

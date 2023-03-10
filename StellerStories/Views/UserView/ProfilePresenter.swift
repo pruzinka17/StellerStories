@@ -29,7 +29,7 @@ final class ProfilePresenter: ObservableObject {
     @Published var viewModel: ProfileViewModel
     
     @Published var isPresentingStories: Bool
-    @Published var isPresentingCollectionSheet: Bool
+    @Published var isPresentingCollection: Bool
     
     @Published var addCollectionText: String
     
@@ -57,7 +57,7 @@ final class ProfilePresenter: ObservableObject {
         )
         
         self.isPresentingStories = false
-        self.isPresentingCollectionSheet = false
+        self.isPresentingCollection = false
         
         self.addCollectionText = ""
         
@@ -131,7 +131,7 @@ extension ProfilePresenter {
         collectionsManager.createCollection(for: userId, name: addCollectionText)
         addCollectionText = ""
         updateCollections()
-        isPresentingCollectionSheet = false
+        isPresentingCollection = false
     }
     
     func removeCollection(for collectionId: String) {

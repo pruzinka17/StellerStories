@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F70CE57729BB4A6F00D7133E /* ProfileViewEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70CE57629BB4A6F00D7133E /* ProfileViewEvents.swift */; };
 		F7176C3E29A0D9160059340E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C3D29A0D9160059340E /* User.swift */; };
 		F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */; };
 		F7176C4629A0DA9C0059340E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F70CE57629BB4A6F00D7133E /* ProfileViewEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewEvents.swift; sourceTree = "<group>"; };
 		F7176C3D29A0D9160059340E /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePresenter.swift; sourceTree = "<group>"; };
 		F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				F7176C4229A0DA8B0059340E /* ProfilePresenter.swift */,
 				F7176C4529A0DA9C0059340E /* ProfileViewModel.swift */,
 				F719593429B241980098610F /* ProfileContext.swift */,
+				F70CE57629BB4A6F00D7133E /* ProfileViewEvents.swift */,
 			);
 			path = UserView;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				F77BADA229B73D6400F8A276 /* Collection.swift in Sources */,
 				F77BADA529B7527E00F8A276 /* AddCollectionButtonStyle.swift in Sources */,
 				F7176C4329A0DA8B0059340E /* ProfilePresenter.swift in Sources */,
+				F70CE57729BB4A6F00D7133E /* ProfileViewEvents.swift in Sources */,
 				F7DDE9B4299E80B3009C9E45 /* StoryDTO.swift in Sources */,
 				F7E2F74429B61094007D32DF /* OffsetPreferenceKey.swift in Sources */,
 				F7176C4B29A0DDBA0059340E /* UserService.swift in Sources */,

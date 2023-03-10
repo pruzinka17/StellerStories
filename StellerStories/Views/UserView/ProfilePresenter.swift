@@ -7,11 +7,6 @@
 
 import Foundation
 
-enum ProfileViewEvents {
-    
-    case didScrollStories(Double, Double)
-}
-
 final class ProfilePresenter: ObservableObject {
     
     private let userService: UserService
@@ -123,7 +118,7 @@ extension ProfilePresenter {
     }
 }
 
-// MARK: - Public collection methods
+// MARK: - Collection methods
 
 extension ProfilePresenter {
     
@@ -163,7 +158,7 @@ extension ProfilePresenter {
             viewModel.collections = .empty
         } else {
             
-            viewModel.collections = .populated(items)
+            viewModel.collections = .populated(items.reversed())
         }
     }
 }

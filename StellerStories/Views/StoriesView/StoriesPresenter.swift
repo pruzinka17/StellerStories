@@ -22,6 +22,7 @@ final class StoriesPresenter: ObservableObject {
     @Published var isPresentingCollections: Bool
     
     @Published var collectionsToSaveTo: [String]
+    @Published var collectionToRemoveFrom: [String]
     
     init(
         context: StoriesContext,
@@ -46,6 +47,7 @@ final class StoriesPresenter: ObservableObject {
         self.isPresentingCollections = false
         
         self.collectionsToSaveTo = []
+        self.collectionToRemoveFrom = []
     }
 }
 
@@ -53,22 +55,25 @@ final class StoriesPresenter: ObservableObject {
 
 extension StoriesPresenter {
     
+    func collectionSheetDismissed() {
+        
+        saveStoryToCollections()
+        collectionsToSaveTo = []
+        
+        removeStoryFromCollections()
+        collectionToRemoveFrom = []
+    }
+    
+    func collectionClicked(collectionId: String) {
+        
+        collectionsToSaveTo.append(collectionId)
+    }
+    
     func savedInCollection(collectionId: String) -> Bool {
         
         let collections = collectionsManager.storyInCollections(userId: context.userId, storyId: viewModel.presentedStoryId)
         
         return collections.contains(where: { $0 == collectionId } )
-    }
-    
-    func addToBeSaved(collectionId: String) {
-        
-        collectionsToSaveTo.append(collectionId)
-    }
-    
-    func saveCurrentStory() {
-        
-        saveStoryToCollections(storyId: viewModel.presentedStoryId, collectionIds: collectionsToSaveTo)
-        collectionsToSaveTo = []
     }
     
     func isStoryInCollection(for storyId: String) -> Bool {
@@ -98,17 +103,23 @@ extension StoriesPresenter {
             viewModel.collections = .empty
         } else {
             
-            viewModel.collections = .populated(items)
+            viewModel.collections = .populated(items.reversed())
         }
     }
 }
 
 private extension StoriesPresenter {
     
-    func saveStoryToCollections(storyId: String, collectionIds: [String]) {
+    func saveStoryToCollections() {
         
-        collectionsManager.addStoryToCollections(collectionIds: collectionIds, userId: context.userId, storyId: storyId)
+        collectionsManager.addStoryToCollections(collectionIds: collectionsToSaveTo, userId: context.userId, storyId: viewModel.presentedStoryId)
     }
+    
+    func removeStoryFromCollections() {
+        
+        collectionsManager.removeStoryFromCollections(from: collectionToRemoveFrom, userId: context.userId, storyId: viewModel.presentedStoryId)
+    }
+    
 }
 
 // MARK: - Public methods

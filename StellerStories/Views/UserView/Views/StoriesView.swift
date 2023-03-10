@@ -53,7 +53,7 @@ struct StoriesView: View {
                 .presentationDetents([.fraction(0.1)])
                 .onDisappear {
                     
-                    presenter.saveCurrentStory()
+                    presenter.collectionSheetDismissed()
                 }
         })
         .onAppear {
@@ -89,7 +89,8 @@ private extension StoriesView {
     
     @ViewBuilder func collectionCover(collection: StoriesViewModel.CollectionState.Collection) -> some View {
         
-        let toBeSavedTo = presenter.collectionsToSaveTo.contains(where: { $0 == collection.id } )
+        let isToBeSavedTo = presenter.collectionsToSaveTo.contains(where: { $0 == collection.id } )
+        let isToBeRemoved = presenter.collectionToRemoveFrom.contains(where: { $0 == collection.id } )
         let alreadyInCollection = presenter.savedInCollection(collectionId: collection.id)
         
         ZStack(alignment: .topTrailing) {
@@ -107,15 +108,38 @@ private extension StoriesView {
             .background {
                 
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(alreadyInCollection ? .red : .gray)
                     .opacity(0.1)
             }
-            .opacity(toBeSavedTo ? 0.5 : 1)
-            
+            .overlay {
+                
+                if alreadyInCollection {
+                    
+                    Color.blue
+                        .opacity(0.3)
+                }
+                
+                if isToBeRemoved {
+                    
+                    Color.red
+                        .opacity(0.3)
+                }
+                
+                if isToBeSavedTo {
+                    
+                    Color.yellow
+                        .opacity(0.3)
+                }
+            }
         }
         .onTapGesture {
             
-            presenter.addToBeSaved(collectionId: collection.id)
+            if alreadyInCollection {
+                
+                presenter.collectionToRemoveFrom.append(collection.id)
+            } else {
+                
+                presenter.collectionsToSaveTo.append(collection.id)
+            }
         }
     }
 }

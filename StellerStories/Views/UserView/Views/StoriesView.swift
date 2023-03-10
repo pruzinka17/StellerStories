@@ -47,14 +47,15 @@ struct StoriesView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
             }
         }
-        .sheet(isPresented: $presenter.isPresentingCollections, content: {
+        .sheet(
+        isPresented: $presenter.isPresentingCollections,
+        onDismiss: {
+            
+            presenter.collectionSheetDismissed()
+        }, content: {
             
             makeCollectionSheet()
                 .presentationDetents([.fraction(0.1)])
-                .onDisappear {
-                    
-                    presenter.collectionSheetDismissed()
-                }
         })
         .onAppear {
             

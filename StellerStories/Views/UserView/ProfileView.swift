@@ -53,19 +53,18 @@ struct ProfileView: View {
             }
         }
         .fullScreenCover(
-            isPresented: $presenter.isPresentingStories,
-            content: {
-                
-                StoriesView(
-                    context: presenter.makeStoriesContext(),
-                    eventHadler: presenter.makeStoriesEventHandler(),
-                    collectionsManager: presenter.collectionsManager
-                )
-                .onDisappear {
-                    
-                    presenter.updateCollections()
-                }
-            })
+        isPresented: $presenter.isPresentingStories,
+        onDismiss: {
+            
+            presenter.updateCollections()
+        }, content: {
+            
+            StoriesView(
+                context: presenter.makeStoriesContext(),
+                eventHadler: presenter.makeStoriesEventHandler(),
+                collectionsManager: presenter.collectionsManager
+            )
+        })
         .fullScreenCover(isPresented: $presenter.isPresentingCollection, content: {
             
             makeCollectionSheet()
